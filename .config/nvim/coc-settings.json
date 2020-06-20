@@ -1,0 +1,10 @@
+{
+  "python.jediEnabled": false,
+  "cSpell.userWords": [
+    "ctrlp",
+    "endofbuffer",
+    "rebotics",
+    "tmux's"
+  ],
+  "explorer.icon.enableNerdfont": true
+}
