@@ -160,6 +160,7 @@ if (empty($TMUX))
     hi LineNr ctermbg=NONE guibg=NONE
   endif
 endif
+
 " ======================================================================
 " Style settings START
 " ======================================================================
@@ -176,9 +177,6 @@ nmap <leader>c :VimtexCompile<CR>
 " Navigate by visual lines in TeX files
 au FileType tex noremap <buffer> j gj
 au FileType tex noremap <buffer> k gk
-
-" Enable spell check for English and Russian languages
-" :set spell spelllang=en_us,ru_ru
 
 " ======================================================================
 " Latex setup END
