@@ -1,3 +1,10 @@
+shell:
+  program: /bin/bash
+  args:
+    - --login
+    - -c
+    - 'tmux attach -t Alacritty || tmux new -s Alacritty'
+
 colors:
   # Default colors
   primary:

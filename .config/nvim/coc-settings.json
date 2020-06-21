@@ -1,12 +1,14 @@
 {
   "python.jediEnabled": false,
   "cSpell.userWords": [
+    "Alacritty",
     "ctrlp",
     "endofbuffer",
     "paginations",
     "paginators",
     "rebm",
     "rebotics",
+    "tmux",
     "tmux's"
   ],
   "explorer.icon.enableNerdfont": true
