@@ -28,7 +28,8 @@ call minpac#add('tpope/vim-fugitive')
 " Support for the 'dot' command for plugins such as vim-surround and so on
 call minpac#add('tpope/vim-repeat')
 " Fuzzy Search
-call minpac#add('kien/ctrlp.vim')
+call minpac#add('junegunn/fzf', {'do': { -> fzf#insall()} })
+call minpac#add('junegunn/fzf.vim')
 " Support for SCSS syntax
 call minpac#add('cakebaker/scss-syntax.vim')
 " Nice looking VIM Theme
@@ -63,6 +64,10 @@ nmap <leader>nn :CocCommand explorer<CR>
 
 " Convert tabs to spaces when press F9
 map <F9> :%s;^\(\s\+\);\=repeat(' ', len(submatch(0))/2);g<CR>
+
+" Open fzf
+nnoremap <c-p> :GFiles<cr>
+
 " ======================================================================
 " Common keymaps END
 " ======================================================================
@@ -81,11 +86,6 @@ set noswapfile
 set sts=2
 set ts=2
 set sw=2
-
-"CtrlP setup
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
 
 " Set up highlight for .ejs files
 au BufNewFile,BufRead *.ejs set filetype=html
@@ -234,6 +234,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gR <Plug>(coc-rename)
 
 " Remap for do codeAction of selected region
 function! s:cocActionsOpenFromSelected(type) abort
