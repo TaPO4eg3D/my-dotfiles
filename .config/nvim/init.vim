@@ -39,6 +39,8 @@ call minpac#add('jlanzarotta/bufexplorer')
 call minpac#add('raimondi/delimitmate')
 " Support for LaTeX
 call minpac#add('lervag/vimtex')
+" Support for Elixir
+call minpac#add('elixir-editors/vim-elixir')
 " Auto keyboard layout switcher
 call minpac#add('lyokha/vim-xkbswitch')
 " Add markdown support
@@ -203,6 +205,7 @@ au FileType tex noremap <buffer> k gk
     \ 'coc-yank',
     \ 'coc-json',
     \ 'coc-vimtex',
+    \ 'coc-elixir',
     \ ]
 
 " use <tab> for trigger completion and navigate to the next complete item
