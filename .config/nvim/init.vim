@@ -57,7 +57,7 @@ call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
 " Common keymaps START
 " ======================================================================
 " Put your non-Plugin stuff after this line
-let mapleader = ","
+let mapleader = "\<Space>"
 
 "Open FileExplorer
 nmap <leader>nn :CocCommand explorer<CR>
@@ -202,6 +202,7 @@ au FileType tex noremap <buffer> k gk
     \ 'coc-xml',
     \ 'coc-yank',
     \ 'coc-json',
+    \ 'coc-vimtex',
     \ ]
 
 " use <tab> for trigger completion and navigate to the next complete item
