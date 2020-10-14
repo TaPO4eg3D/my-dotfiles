@@ -2,12 +2,18 @@
   "python.jediEnabled": false,
   "cSpell.userWords": [
     "Alacritty",
+    "BBOX",
+    "Konva",
+    "Planogram",
     "ctrlp",
     "endofbuffer",
     "paginations",
     "paginators",
+    "realogram",
+    "realograms",
     "rebm",
     "rebotics",
+    "retechlabs",
     "tmux",
     "tmux's"
   ],

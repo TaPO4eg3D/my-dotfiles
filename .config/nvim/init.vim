@@ -23,8 +23,10 @@ call minpac#add('bling/vim-airline')
 call minpac#add('scrooloose/syntastic')
 " Work with 'surroundings': parentheses, brackets, quotes and so on
 call minpac#add('tpope/vim-surround')
-" Verty powerfull plugin for working with Git
+" Very powerfull plugin for working with Git
 call minpac#add('tpope/vim-fugitive')
+" Magit clone for VIM
+call minpac#add('jreybert/vimagit')
 " Support for the 'dot' command for plugins such as vim-surround and so on
 call minpac#add('tpope/vim-repeat')
 " Fuzzy Search
@@ -33,7 +35,7 @@ call minpac#add('junegunn/fzf.vim')
 " Support for SCSS syntax
 call minpac#add('cakebaker/scss-syntax.vim')
 " Nice looking VIM Theme
-call minpac#add('morhetz/gruvbox')
+call minpac#add('dracula/vim', {'name': 'dracula'})
 call minpac#add('tpope/vim-commentary')
 call minpac#add('jlanzarotta/bufexplorer')
 call minpac#add('raimondi/delimitmate')
@@ -49,7 +51,16 @@ call minpac#add('plasticboy/vim-markdown')
 
 " VIM Intellisense
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
-
+" Highlight colors right in the vim
+call minpac#add('lilydjwg/colorizer')
+" Support for PUG files
+call minpac#add('digitaltoad/vim-pug')
+" Display file structure using CTags
+call minpac#add('majutsushi/tagbar')
+" Support for TypeScript
+call minpac#add('leafgarland/typescript-vim')
+" Shows Git info
+call minpac#add('airblade/vim-gitgutter')
 " ======================================================================
 " Plugins END
 " ======================================================================
@@ -61,14 +72,23 @@ call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
 " Put your non-Plugin stuff after this line
 let mapleader = "\<Space>"
 
-"Open FileExplorer
+"Toggle FileExplorer
 nmap <leader>nn :CocCommand explorer<CR>
+"Toggle TagBar
+nmap <leader>nt :TagbarToggle<CR>
 
 " Convert tabs to spaces when press F9
 map <F9> :%s;^\(\s\+\);\=repeat(' ', len(submatch(0))/2);g<CR>
 
 " Open fzf
 nnoremap <c-p> :GFiles<cr>
+" fzf tags
+nmap <leader>t :BTags<CR>
+nmap <leader>T :Tags<CR>
+
+" Buffer navigation
+nmap <leader>h :bp<CR>
+nmap <leader>l :bn<CR>
 
 " ======================================================================
 " Common keymaps END
@@ -79,7 +99,7 @@ nnoremap <c-p> :GFiles<cr>
 " Common settings START
 " ======================================================================
 " Display number of lines
-set rnu
+set nu rnu
 
 " Disable swap
 set noswapfile
@@ -126,8 +146,8 @@ set updatetime=300                      " Faster completion
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 
 " Setup of auto keyboard layout switch
-let g:XkbSwitchEnabled = 1
-let g:XkbSwitchLib = '/usr/local/lib/libg3kbswitch.so' " Only works with GNOME
+" let g:XkbSwitchEnabled = 1
+" let g:XkbSwitchLib = '/usr/local/lib/libg3kbswitch.so' " Only works with GNOME
 
 " ======================================================================
 " Common settings END
@@ -143,8 +163,10 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Syntax and theme setup
+packadd! dracula
 syntax enable
-colorscheme gruvbox
+colorscheme dracula
+hi Normal guibg=NONE ctermbg=NONE
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -179,6 +201,7 @@ nmap <leader>c :VimtexCompile<CR>
 " Navigate by visual lines in TeX files
 au FileType tex noremap <buffer> j gj
 au FileType tex noremap <buffer> k gk
+au FileType tex nmap <leader>lg <Plug>(vimtex-log)
 
 " ======================================================================
 " Latex setup END
@@ -188,11 +211,13 @@ au FileType tex noremap <buffer> k gk
 " Intellisense setup START
 " ======================================================================
   let g:coc_global_extensions = [
+    \ 'coc-marketplace',
     \ 'coc-snippets',
     \ 'coc-spell-checker',
     \ 'coc-actions',
     \ 'coc-emmet',
     \ 'coc-tsserver',
+    \ 'coc-angular',
     \ 'coc-html',
     \ 'coc-css',
     \ 'coc-cssmodules',
