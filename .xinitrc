@@ -53,4 +53,19 @@ if [[ $XRANDR_OUTPUT =~ "HDMI-0" ]] &&
   xrandr --output DP-1 --same-as HDMI-0 --auto
 fi
 
+if [[ $XRANDR_OUTPUT =~ "HDMI2" ]] &&
+   [[ $XRANDR_OUTPUT =~ "HDMI3" ]]; then
+  echo "Setting up just two monitors..."
+  xrandr --output HDMI2 --primary --auto
+  xrandr --output HDMI3 --right-of HDMI2 --auto
+fi
+
+# Launcing compositor for transparancy
+picom &
+# Launching notifaction manager
+dunst &
+
+# Setting up a random background from bg folder
+feh --bg-fill --randomize ~/.local/share/bg/*
+
 exec dwm
