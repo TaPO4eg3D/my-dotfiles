@@ -289,3 +289,15 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " ======================================================================
 " Intellisense setup END
 " ======================================================================
+
+
+" ======================================================================
+" Python specific settings START
+" ======================================================================
+
+au BufRead,BufNewFile *.py highlight ColorColumn ctermbg=magenta
+au BufRead,BufNewFile *.py call matchadd('ColorColumn', '\%121v', 100)
+
+" ======================================================================
+" Python specific settings END
+" ======================================================================
