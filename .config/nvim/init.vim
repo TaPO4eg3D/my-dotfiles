@@ -90,6 +90,13 @@ nmap <leader>T :Tags<CR>
 nmap <leader>h :bp<CR>
 nmap <leader>l :bn<CR>
 
+" Window navigation
+nmap <leader>wl <c-w>l
+nmap <leader>wh <c-w>h
+nmap <leader>wj <c-w>j
+nmap <leader>wk <c-w>k
+nmap <leader>ww <c-w>w
+
 " ======================================================================
 " Common keymaps END
 " ======================================================================
