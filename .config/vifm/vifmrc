@@ -483,7 +483,19 @@ nnoremap <f8> :delete<cr>
 " let $VIFM_SERVER_NAME = v:servername
 
 " -----------------------------------------------------------------------------
-" Custom COMMANDS
+" Custom commands START
 " -----------------------------------------------------------------------------
 
 command link ln -s %d/%f %D
+
+" -----------------------------------------------------------------------------
+" Custom commands END
+" -----------------------------------------------------------------------------
+
+" Customize viewcolumns
+set timefmt='%Y-%m-%d %H:%M'
+set viewcolumns=-80%{name},10%{ext},10%{mtime}
+
+" Support of drag and drop
+command! dragon dragon-drag-and-drop -a -x %f
+nmap <C-f> :dragon<CR>
