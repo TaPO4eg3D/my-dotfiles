@@ -1,0 +1,1 @@
+/home/tapo4eg3d/.zprofile
