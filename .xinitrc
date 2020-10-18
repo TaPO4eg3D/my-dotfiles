@@ -65,7 +65,7 @@ picom &
 # Launching notifaction manager
 dunst &
 
-# Setting up a random background from bg folder
-feh --bg-fill --randomize ~/.local/share/bg/*
+# Setting up a background
+bgchange &
 
 exec dwm
