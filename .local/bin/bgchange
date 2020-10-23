@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Setting up a random background from bg folder
+# Can't use feh --randomize because of multiple monitor setup
+# I want the same image on all monitors
+BG_FILES_FOLDER=~/.local/share/bg
+RANDOM_BG_FILE=`ls $BG_FILES_FOLDER | sort -R | head -n 1`
+feh --bg-fill $BG_FILES_FOLDER/$RANDOM_BG_FILE
