@@ -30,7 +30,7 @@ call minpac#add('jreybert/vimagit')
 " Support for the 'dot' command for plugins such as vim-surround and so on
 call minpac#add('tpope/vim-repeat')
 " Fuzzy Search
-call minpac#add('junegunn/fzf', {'do': { -> fzf#insall()} })
+call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 " Support for SCSS syntax
 call minpac#add('cakebaker/scss-syntax.vim')
@@ -61,6 +61,8 @@ call minpac#add('majutsushi/tagbar')
 call minpac#add('leafgarland/typescript-vim')
 " Shows Git info
 call minpac#add('airblade/vim-gitgutter')
+" Debugger for VIM
+call minpac#add('TaPO4eg3D/vimspector')
 " ======================================================================
 " Plugins END
 " ======================================================================
@@ -305,6 +307,11 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 au BufRead,BufNewFile *.py highlight ColorColumn ctermbg=magenta
 au BufRead,BufNewFile *.py call matchadd('ColorColumn', '\%121v', 100)
 
+" Generate python excluding common env folders
+au BufRead,BufNewFile *.py let g:fzf_tags_command = 'ctags -R --exclude={env,.env,venv,.venv}'
+
 " ======================================================================
 " Python specific settings END
 " ======================================================================
+
+source ~/.config/nvim/plugin-configs/vimspector.vim
