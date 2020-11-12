@@ -110,3 +110,4 @@ export TERM=xterm-256color
 
 alias vim="nvim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias steamguard='mono /usr/local/bin/steamguard'
