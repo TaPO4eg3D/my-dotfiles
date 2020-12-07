@@ -43,14 +43,15 @@ call minpac#add('raimondi/delimitmate')
 call minpac#add('lervag/vimtex')
 " Support for Elixir
 call minpac#add('elixir-editors/vim-elixir')
-" Auto keyboard layout switcher
-call minpac#add('lyokha/vim-xkbswitch')
 " Add markdown support
 call minpac#add('godlygeek/tabular')
 call minpac#add('plasticboy/vim-markdown')
 
-" VIM Intellisense
-call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
+" NeoVIM LSP
+call minpac#add('neovim/nvim-lspconfig')
+" NeoVIM Completion
+call minpac#add('nvim-lua/completion-nvim')
+
 " Highlight colors right in the vim
 call minpac#add('lilydjwg/colorizer')
 " Support for PUG files
@@ -63,6 +64,12 @@ call minpac#add('leafgarland/typescript-vim')
 call minpac#add('airblade/vim-gitgutter')
 " Debugger for VIM
 call minpac#add('TaPO4eg3D/vimspector')
+" NERDTree
+call minpac#add('preservim/nerdtree')
+" VIM DevIcons
+call minpac#add('ryanoasis/vim-devicons')
+" Git support for NERDTree
+call minpac#add('Xuyuanp/nerdtree-git-plugin')
 " ======================================================================
 " Plugins END
 " ======================================================================
@@ -75,22 +82,28 @@ call minpac#add('TaPO4eg3D/vimspector')
 let mapleader = "\<Space>"
 
 "Toggle FileExplorer
-nmap <leader>nn :CocCommand explorer<CR>
+nmap <leader>nn :NERDTreeToggle<CR>
+" Find file in NERDTree
+nmap <leader>nf :NERDTreeFind<CR>
+
 "Toggle TagBar
 nmap <leader>nt :TagbarToggle<CR>
 
 " Convert tabs to spaces when press F9
 map <F9> :%s;^\(\s\+\);\=repeat(' ', len(submatch(0))/2);g<CR>
 
-" Open fzf
-nnoremap <c-p> :GFiles<cr>
+" Search for files
+nnoremap <leader>fF :Files<cr>
+" Search for project files
+nnoremap <leader>ff :GFiles<cr>
+
 " fzf tags
-nmap <leader>t :BTags<CR>
-nmap <leader>T :Tags<CR>
+nmap <leader>fT :Tags<CR>
+nmap <leader>ft :BTags<CR>
 
 " Buffer navigation
-nmap <leader>h :bp<CR>
-nmap <leader>l :bn<CR>
+nmap <leader>bh :bp<CR>
+nmap <leader>bl :bn<CR>
 
 " Window navigation
 nmap <leader>wl <c-w>l
@@ -154,10 +167,6 @@ set mouse=a
 set updatetime=300                      " Faster completion
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 
-" Setup of auto keyboard layout switch
-" let g:XkbSwitchEnabled = 1
-" let g:XkbSwitchLib = '/usr/local/lib/libg3kbswitch.so' " Only works with GNOME
-
 " ======================================================================
 " Common settings END
 " ======================================================================
@@ -217,90 +226,6 @@ au FileType tex nmap <leader>lg <Plug>(vimtex-log)
 " ======================================================================
 
 " ======================================================================
-" Intellisense setup START
-" ======================================================================
-  let g:coc_global_extensions = [
-    \ 'coc-marketplace',
-    \ 'coc-snippets',
-    \ 'coc-spell-checker',
-    \ 'coc-actions',
-    \ 'coc-emmet',
-    \ 'coc-tsserver',
-    \ 'coc-angular',
-    \ 'coc-html',
-    \ 'coc-css',
-    \ 'coc-cssmodules',
-    \ 'coc-yaml',
-    \ 'coc-python',
-    \ 'coc-explorer',
-    \ 'coc-svg',
-    \ 'coc-vimlsp',
-    \ 'coc-xml',
-    \ 'coc-yank',
-    \ 'coc-json',
-    \ 'coc-vimtex',
-    \ 'coc-elixir',
-    \ ]
-
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-
-" Choose variants through Tab and Shift + Tab
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Press Enter to choose variant for completion
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Select the first completion item and confirm the completion when no item
-" has been selected
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gR <Plug>(coc-rename)
-
-" Remap for do codeAction of selected region
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" ======================================================================
-" Intellisense setup END
-" ======================================================================
-
-
-" ======================================================================
 " Python specific settings START
 " ======================================================================
 
@@ -315,3 +240,4 @@ au BufRead,BufNewFile *.py let g:fzf_tags_command = 'ctags -R --exclude={env,.en
 " ======================================================================
 
 source ~/.config/nvim/plugin-configs/vimspector.vim
+source ~/.config/nvim/lsp.vim

@@ -107,7 +107,9 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export TERM=xterm-256color
+export MANPAGER='nvim +Man!'
 
 alias vim="nvim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias steamguard='mono /usr/local/bin/steamguard'
+alias vimdiff='nvim -d'
