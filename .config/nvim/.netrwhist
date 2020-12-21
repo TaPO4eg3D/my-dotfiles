@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/tapo4eg3d/Projects/job/rebotics-management-django'
+let g:netrw_dirhist_5='/home/tapo4eg3d/.config/nvim/lsp'
+let g:netrw_dirhist_4='/home/tapo4eg3d/Projects/job/rebotics-management-django'
+let g:netrw_dirhist_3='/home/tapo4eg3d/Projects/job/rebotics-management-django/.venv'
+let g:netrw_dirhist_2='/home/tapo4eg3d/Projects/job/rebotics-management-django'
+let g:netrw_dirhist_1='/home/tapo4eg3d'
+let g:netrw_dirhist_0='/home/tapo4eg3d/Projects/job/rebotics-management-django'
+let g:netrw_dirhist_9='/home/tapo4eg3d/Projects/job/rebotics-management-frontend'
+let g:netrw_dirhist_8='/home/tapo4eg3d/.config/nvim/pack/minpac/start/vimspector'
+let g:netrw_dirhist_7='/home/tapo4eg3d/.config/nvim/pack/minpac/start'
