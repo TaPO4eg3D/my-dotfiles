@@ -70,6 +70,10 @@ call minpac#add('preservim/nerdtree')
 call minpac#add('ryanoasis/vim-devicons')
 " Git support for NERDTree
 call minpac#add('Xuyuanp/nerdtree-git-plugin')
+" Automatic tag management
+call minpac#add('ludovicchabant/vim-gutentags')
+" Automatic python imports using Tags
+call minpac#add('mgedmin/python-imports.vim')
 " ======================================================================
 " Plugins END
 " ======================================================================
@@ -96,6 +100,8 @@ map <F9> :%s;^\(\s\+\);\=repeat(' ', len(submatch(0))/2);g<CR>
 nnoremap <leader>fF :Files<cr>
 " Search for project files
 nnoremap <leader>ff :GFiles<cr>
+" Search inside of files
+nnoremap <leader>fi :Ag<cr>
 
 " fzf tags
 nmap <leader>fT :Tags<CR>
@@ -232,12 +238,18 @@ au FileType tex nmap <leader>lg <Plug>(vimtex-log)
 au BufRead,BufNewFile *.py highlight ColorColumn ctermbg=magenta
 au BufRead,BufNewFile *.py call matchadd('ColorColumn', '\%121v', 100)
 
-" Generate python excluding common env folders
+" Generate python excluding common env folders TODO: it should be managed by Gutentags, figure out this later
 au BufRead,BufNewFile *.py let g:fzf_tags_command = 'ctags -R --exclude={env,.env,venv,.venv}'
+
+map <leader>ri :ImportName<CR>
+map <leader>rI :ImportNameHere<CR>
 
 " ======================================================================
 " Python specific settings END
 " ======================================================================
+
+" Add tag generation status to the statusline
+set statusline+=%{gutentags#statusline()}
 
 source ~/.config/nvim/plugin-configs/vimspector.vim
 source ~/.config/nvim/lsp.vim

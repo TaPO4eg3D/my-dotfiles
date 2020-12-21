@@ -14,7 +14,6 @@ nnoremap <silent> <leader>rR <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> <leader>rd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <leader>rD <cmd>lua vim.lsp.buf.declaration()<CR>
 
-nnoremap <silent> <leader>ri <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <leader>rT <cmd>lua vim.lsp.buf.type_definition()<CR>
 
 nnoremap <silent> <leader>ra <cmd>lua vim.lsp.buf.code_action()<CR>

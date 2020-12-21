@@ -1,3 +1,3 @@
-local nvim_lsp = require 'nvim_lsp'
+local nvim_lsp = require 'lspconfig'
 
 nvim_lsp.tsserver.setup({})
