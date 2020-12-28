@@ -1,6 +1,6 @@
-local nvim_lsp = require 'nvim_lsp'
+local lspconfig = require 'lspconfig'
 
-nvim_lsp.pyls.setup({
+lspconfig.pyls.setup({
   on_attach = require'completion'.on_attach;
   settings = {
     pyls = {

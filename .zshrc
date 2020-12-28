@@ -108,6 +108,7 @@ fi
 
 export TERM=xterm-256color
 export MANPAGER='nvim +Man!'
+export _JAVA_AWT_WM_NONREPARENTING=1 # Fix broken java apps on DWM
 
 alias vim="nvim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'

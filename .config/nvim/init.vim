@@ -63,7 +63,7 @@ call minpac#add('leafgarland/typescript-vim')
 " Shows Git info
 call minpac#add('airblade/vim-gitgutter')
 " Debugger for VIM
-call minpac#add('TaPO4eg3D/vimspector')
+call minpac#add('puremourning/vimspector')
 " NERDTree
 call minpac#add('preservim/nerdtree')
 " VIM DevIcons
