@@ -77,6 +77,10 @@ call minpac#add('mgedmin/python-imports.vim')
 " Better deafults for nvim-lsp
 call minpac#add('RishabhRD/popfix')
 call minpac#add('RishabhRD/nvim-lsputils')
+" VimWiki
+call minpac#add('vimwiki/vimwiki')
+" Zettelkasten
+call minpac#add('michal-h21/vim-zettel')
 " ======================================================================
 " Plugins END
 " ======================================================================

@@ -106,6 +106,9 @@ selection:
 
 live_config_reload: true
 
+env:
+  WINIT_X11_SCALE_FACTOR: "1.0"
+
 key_bindings:
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: Equals, mods: Control, action: IncreaseFontSize }
