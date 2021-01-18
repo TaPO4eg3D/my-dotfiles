@@ -322,7 +322,7 @@ filetype *.ftp
 " Fuse7z and 7z archives
 filetype *.7z
        \ {Mount with fuse-7z}
-       \ FUSE_MOUNT|fuse-7z %SOURCE_FILE %DESTINATION_DIR,
+       \ FUSE_MOUNT|fuse-7zip %SOURCE_FILE %DESTINATION_DIR,
 fileviewer *.7z 7z l %c
 
 " Office files
@@ -514,3 +514,8 @@ nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') 
 
 " yank root of current file's name into the clipboard
 nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+
+" zip selected files
+command! zips if [ -n "%a" ]; then
+           \     zip -r '%a.zip' %f;
+           \ fi

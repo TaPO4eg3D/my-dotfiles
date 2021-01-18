@@ -3,6 +3,7 @@ packadd! nvim-lspconfig
 lua <<EOF
 require 'python-lsp'
 require 'tscript-lsp'
+require 'texlab-lsp'
 
 -- Handling NVIM-LSP action through nvim-lsputil plugin
 vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler

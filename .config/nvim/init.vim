@@ -81,6 +81,8 @@ call minpac#add('RishabhRD/nvim-lsputils')
 call minpac#add('vimwiki/vimwiki')
 " Zettelkasten
 call minpac#add('michal-h21/vim-zettel')
+" Writing tables in markup languages like Markdown becomes really easy
+call minpac#add('dhruvasagar/vim-table-mode')
 " ======================================================================
 " Plugins END
 " ======================================================================
@@ -227,12 +229,14 @@ endif
 let g:tex_flavor = 'latex'
 " Hide vim-tex QuickFix window
 let g:vimtex_quickfix_mode = 0
-nmap <leader>c :VimtexCompile<CR>
 
 " Navigate by visual lines in TeX files
 au FileType tex noremap <buffer> j gj
 au FileType tex noremap <buffer> k gk
+
+" Key bindings
 au FileType tex nmap <leader>lg <Plug>(vimtex-log)
+au FileType tex nmap <leader>c :VimtexCompile<CR>
 
 " ======================================================================
 " Latex setup END
