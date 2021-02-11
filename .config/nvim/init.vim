@@ -1,7 +1,5 @@
 set nocompatible              " be iMproved, required
-
-" Enable auto-completion
-filetype off
+filetype plugin on
 
 " Russian keyboard fix
 set keymap=russian-jcukenwin
@@ -262,5 +260,8 @@ map <leader>rI :ImportNameHere<CR>
 " Add tag generation status to the statusline
 set statusline+=%{gutentags#statusline()}
 
+" Load setting tightly related to plugin functionality
 source ~/.config/nvim/plugin-configs/vimspector.vim
+source ~/.config/nvim/plugin-configs/vimwiki.vim
+
 source ~/.config/nvim/lsp.vim
