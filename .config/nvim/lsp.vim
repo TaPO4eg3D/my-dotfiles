@@ -1,10 +1,14 @@
 packadd! nvim-lspconfig
+"
+" Use completion-nvim in every buffer
+autocmd BufEnter * lua require'completion'.on_attach()
 
 lua <<EOF
 require 'python-lsp'
 require 'tscript-lsp'
 require 'texlab-lsp'
 require 'vimscript-lsp'
+require 'elm-lsp'
 
 -- Handling NVIM-LSP action through nvim-lsputil plugin
 vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
