@@ -21,13 +21,15 @@ PREVIOUS_MON_X = 0
 
 attach_to_loopback
 
+# Initialize videocam loopback first but I don't bother removing it after the script is done
+sudo modprobe v4l2loopback video_nr=4 'card_label=VirtualScreen'
+
 while true; do
   update_mouse_location
 
   if (( $MOUSE_X < $MON_WIDTH )); then
     MON_X=0
   else
-    echo [MOUSE POSITION]: [$MOUSE_X, $MON_WIDTH] >> log.txt
     MON_X=$MON_WIDTH
   fi
 
