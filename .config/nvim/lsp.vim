@@ -9,6 +9,10 @@ require 'tscript-lsp'
 require 'texlab-lsp'
 require 'vimscript-lsp'
 require 'elm-lsp'
+require 'css-lsp'
+require 'c-langs-lsp'
+require 'rust-lsp'
+require 'html-lsp'
 
 -- Handling NVIM-LSP action through nvim-lsputil plugin
 vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
@@ -30,6 +34,8 @@ nnoremap <silent> <leader>rD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <leader>rT <cmd>lua vim.lsp.buf.type_definition()<CR>
 
 nnoremap <silent> <leader>ra <cmd>lua vim.lsp.buf.code_action()<CR>
+
+" Buffer actions
 nnoremap <silent> <leader>bf <cmd>lua vim.lsp.buf.formatting()<CR>
 
 " Show documentation
@@ -49,3 +55,16 @@ imap <silent> <C-Space> <Plug>(completion_trigger)
 set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
+
+function TypeScriptRenameFile()
+  let l:buff_name = expand('%:p') 
+  let l:new_file_path = input("Input new filename: ", l:buff_name)
+
+  if !empty(glob(l:new_file_path))
+    echo "\r"
+    echo "File with that name already exists!"
+    return
+  endif
+endfunction
+
+nnoremap <leader>bR :call TypeScriptRenameFile()<CR>

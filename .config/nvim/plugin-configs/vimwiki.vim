@@ -1,8 +1,15 @@
+" Support for VimTableMode plugin
+let g:vimwiki_table_mappings=0
+let g:vimwiki_table_auto_fmt=0
+
 au! BufRead,BufNewFile *.wiki nmap <leader>p :call VimwikiPasteClipboardImage()<CR>
 au! BufRead,BufNewFile *.wiki call LoadVimWikiSurrounding()
 
 
 function LoadVimWikiSurrounding() abort
+  " Support for VimTableMode plugin
+  let g:table_mode_corner = '|'
+
   let g:surround_{char2nr('b')} = "*\r*"
   let g:surround_{char2nr('i')} = "_\r_"
   let g:surround_{char2nr('l')} = "_*\r*_"
