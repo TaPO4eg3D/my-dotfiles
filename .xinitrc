@@ -68,4 +68,7 @@ dunst &
 # Setting up a background
 bgchange &
 
+# Status bar composed from blocks
+dwmblocks &
+
 exec dwm

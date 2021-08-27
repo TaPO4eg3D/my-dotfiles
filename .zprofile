@@ -6,3 +6,5 @@ export EDITOR="nvim"
 export TERMINAL="alacritty"
 export BROWSER="google-chrome"
 export READER="zathura"
+
+. "$HOME/.cargo/env"

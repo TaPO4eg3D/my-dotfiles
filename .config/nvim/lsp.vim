@@ -1,8 +1,6 @@
 packadd! nvim-lspconfig
-"
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
 
+"
 lua <<EOF
 require 'python-lsp'
 require 'tscript-lsp'
@@ -45,26 +43,3 @@ nnoremap <silent> <leader>K <cmd>lua vim.lsp.buf.hover()<CR>
 autocmd CursorHold *.[py] lua vim.lsp.buf.document_highlight()
 autocmd CursorHoldI *.[py] lua vim.lsp.buf.document_highlight()
 autocmd CursorMoved *.[py]  lua vim.lsp.buf.clear_references()
-
-
-" ==== COMPLETION ==== "
-
-" Manually trigger completion
-imap <silent> <C-Space> <Plug>(completion_trigger)
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-function TypeScriptRenameFile()
-  let l:buff_name = expand('%:p') 
-  let l:new_file_path = input("Input new filename: ", l:buff_name)
-
-  if !empty(glob(l:new_file_path))
-    echo "\r"
-    echo "File with that name already exists!"
-    return
-  endif
-endfunction
-
-nnoremap <leader>bR :call TypeScriptRenameFile()<CR>

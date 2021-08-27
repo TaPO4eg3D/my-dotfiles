@@ -48,7 +48,7 @@ call minpac#add('plasticboy/vim-markdown')
 " NeoVIM LSP
 call minpac#add('neovim/nvim-lspconfig')
 " NeoVIM Completion
-call minpac#add('nvim-lua/completion-nvim')
+call minpac#add('ms-jpq/coq_nvim')
 
 " Highlight colors right in the vim
 call minpac#add('lilydjwg/colorizer')
@@ -62,12 +62,10 @@ call minpac#add('leafgarland/typescript-vim')
 call minpac#add('airblade/vim-gitgutter')
 " Debugger for VIM
 call minpac#add('puremourning/vimspector')
-" NERDTree
-call minpac#add('preservim/nerdtree')
+" CHADTree (like NERDTree but much better)
+call minpac#add('ms-jpq/chadtree')
 " VIM DevIcons
 call minpac#add('ryanoasis/vim-devicons')
-" Git support for NERDTree
-call minpac#add('Xuyuanp/nerdtree-git-plugin')
 " Automatic tag management
 call minpac#add('ludovicchabant/vim-gutentags')
 " Automatic python imports using Tags
@@ -95,9 +93,7 @@ call minpac#add('vimsence/vimsence')
 let mapleader = "\<Space>"
 
 "Toggle FileExplorer
-nmap <leader>nn :NERDTreeToggle<CR>
-" Find file in NERDTree
-nmap <leader>nf :NERDTreeFind<CR>
+nnoremap <leader>n <cmd>CHADopen<cr>
 
 "Toggle TagBar
 nmap <leader>nt :TagbarToggle<CR>
