@@ -47,6 +47,8 @@ call minpac#add('plasticboy/vim-markdown')
 
 " NeoVIM LSP
 call minpac#add('neovim/nvim-lspconfig')
+" Better NeoVIM LSP UI
+call minpac#add('glepnir/lspsaga.nvim')
 " NeoVIM Completion
 call minpac#add('ms-jpq/coq_nvim')
 
@@ -70,9 +72,6 @@ call minpac#add('ryanoasis/vim-devicons')
 call minpac#add('ludovicchabant/vim-gutentags')
 " Automatic python imports using Tags
 call minpac#add('mgedmin/python-imports.vim')
-" Better deafults for nvim-lsp
-call minpac#add('RishabhRD/popfix')
-call minpac#add('RishabhRD/nvim-lsputils')
 " VimWiki
 call minpac#add('vimwiki/vimwiki')
 " Zettelkasten
