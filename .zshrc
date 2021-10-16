@@ -73,7 +73,6 @@ plugins=(
 	vi-mode
 	docker
 	docker-compose
-	django
 	dotenv
   zsh-autosuggestions
 )
