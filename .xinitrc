@@ -42,6 +42,7 @@ setxkbmap -layout us,ru
 setxkbmap -option 'grp:alt_shift_toggle'
 
 # Manage my home two monitors + TV setup
+XRANDR_SET=0
 XRANDR_OUTPUT=`xrandr --listactivemonitors`
 
 if [[ $XRANDR_OUTPUT =~ "HDMI-0" ]] &&
@@ -51,6 +52,8 @@ if [[ $XRANDR_OUTPUT =~ "HDMI-0" ]] &&
   xrandr --output HDMI-0 --primary --auto
   xrandr --output DVI-D-0 --right-of HDMI-0 --auto
   xrandr --output DP-1 --same-as HDMI-0 --auto
+
+  XRANDR_SET=1
 fi
 
 if [[ $XRANDR_OUTPUT =~ "HDMI2" ]] &&
@@ -58,6 +61,12 @@ if [[ $XRANDR_OUTPUT =~ "HDMI2" ]] &&
   echo "Setting up just two monitors..."
   xrandr --output HDMI2 --primary --auto
   xrandr --output HDMI3 --right-of HDMI2 --auto
+
+  XRANDR_SET=1
+fi
+
+if [[ $XRANDR_SET == 0 ]]; then
+  xrandr --auto
 fi
 
 # Launcing compositor for transparancy
@@ -68,7 +77,15 @@ dunst &
 # Setting up a background
 bgchange &
 
-# Status bar composed from blocks
+# Statusbar for DWM
 dwmblocks &
 
-exec dwm
+# Fix for Java applications
+# https://wiki.archlinux.org/title/java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
+wmname compiz &
+
+
+# Support for NVIDIA Optimus
+/usr/bin/prime-offload
+dwm
+sudo /usr/bin/prime-switch

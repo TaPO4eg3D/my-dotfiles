@@ -1,11 +1,24 @@
 set nocompatible              " be iMproved, required
 filetype plugin on
 
+function! ChangeKeyboardLayout()
+  let l:current_layout = &iminsert
+
+  if l:current_layout == 0
+    set iminsert=1
+  else
+    set iminsert=0
+  endif
+
+endfunction
+
 " Russian keyboard fix
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
+noremap <silent> <C-l> :call ChangeKeyboardLayout()<CR>
+inoremap <silent><expr> <C-l> ChangeKeyboardLayout()
 
 packadd minpac
 call minpac#init()
@@ -48,7 +61,7 @@ call minpac#add('plasticboy/vim-markdown')
 " NeoVIM LSP
 call minpac#add('neovim/nvim-lspconfig')
 " Better NeoVIM LSP UI
-call minpac#add('glepnir/lspsaga.nvim')
+call minpac#add('tami5/lspsaga.nvim')
 " NeoVIM Completion
 call minpac#add('ms-jpq/coq_nvim')
 
@@ -64,8 +77,9 @@ call minpac#add('leafgarland/typescript-vim')
 call minpac#add('airblade/vim-gitgutter')
 " Debugger for VIM
 call minpac#add('puremourning/vimspector')
-" CHADTree (like NERDTree but much better)
-call minpac#add('ms-jpq/chadtree')
+" File manager
+call minpac#add('kyazdani42/nvim-web-devicons') " for file icons
+call minpac#add('kyazdani42/nvim-tree.lua')
 " VIM DevIcons
 call minpac#add('ryanoasis/vim-devicons')
 " Automatic tag management
@@ -92,7 +106,11 @@ call minpac#add('vimsence/vimsence')
 let mapleader = "\<Space>"
 
 "Toggle FileExplorer
-nnoremap <leader>n <cmd>CHADopen<cr>
+lua << EOF
+require'nvim-tree'.setup()
+EOF
+
+nnoremap <leader>nn :NvimTreeToggle<CR>
 
 "Toggle TagBar
 nmap <leader>nt :TagbarToggle<CR>
@@ -145,6 +163,7 @@ set sw=2
 au BufNewFile,BufRead *.ejs set filetype=html
 
 " Open buffer explorer
+" TODO: Remove BufExplorer
 map <leader>o :BufExplorer<cr>
 
 " Searching tweaks
@@ -175,7 +194,7 @@ set wrap "Wrap lines
 set mouse=a
 
 set updatetime=300                      " Faster completion
-set clipboard=unnamedplus               " Copy paste between vim and everything else
+set clipboard+=unnamedplus               " Copy paste between vim and everything else
 
 " ======================================================================
 " Common settings END
@@ -277,11 +296,14 @@ function! s:ag_in(bang, ...)
   endif
   " Press `?' to enable preview window.
   call fzf#vim#ag(join(a:000[1:], ' '), fzf#vim#with_preview({'dir': a:1}, 'up:50%:hidden', '?'), a:bang)
-
-  " If you don't want preview option, use this
-  " call fzf#vim#ag(join(a:000[1:], ' '), {'dir': a:1}, a:bang)
 endfunction
+
+function! s:ag_no_tests(bang, ...)
+  call fzf#vim#ag(join(a:000[1:], ' '), '--ignore ".*test.*"', fzf#vim#with_preview({}, 'up:50%:hidden', '?'), a:bang)
+endfunction
+
 command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
+command! -bang -nargs=? -complete=dir AgNoTests call s:ag_no_tests(<bang>0, <f-args>)
 
 " Add tag generation status to the statusline
 set statusline+=%{gutentags#statusline()}

@@ -73,7 +73,6 @@ plugins=(
 	vi-mode
 	docker
 	docker-compose
-	django
 	dotenv
   zsh-autosuggestions
 )
@@ -108,7 +107,8 @@ fi
 
 export TERM=xterm-256color
 export MANPAGER='nvim +Man!'
-export _JAVA_AWT_WM_NONREPARENTING=1 # Fix broken java apps on DWM
+export _JAVA_AWT_WM_NONREPARENTING=1 # Fix broken Java apps on DWM
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true' # Fix fonts in Java appliactions
 
 alias vim="nvim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
