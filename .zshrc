@@ -105,6 +105,9 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Source SecureEnvs that doesn't mean to go into Git Repo
+source $HOME/.secure_envs
+
 export TERM=xterm-256color
 export MANPAGER='nvim +Man!'
 export _JAVA_AWT_WM_NONREPARENTING=1 # Fix broken Java apps on DWM
