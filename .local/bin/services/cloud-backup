@@ -1,0 +1,8 @@
+#! /usr/bin/env bash
+inotifywait -e close_write,moved_to,create -m -r ~/Zettelkasten |
+while read -r directory events filename; do
+  echo "Uploading to cloud because '$filename' changed"
+  echo "Skipping $(timeout 15 cat | wc -l) further changes"
+  rclone sync ~/Zettelkasten YandexDisk:Zettelkasten
+  echo "Done uploading to cloud!"
+done
