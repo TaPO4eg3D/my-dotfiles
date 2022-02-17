@@ -57,8 +57,6 @@ colors:
     cyan:    '0x59dffc'
     white:   '0xe6e6d1'
 
-background_opacity: 0.9
-
 font:
   normal:
     family: "JetBrainsMono Nerd Font Mono"
@@ -84,6 +82,7 @@ font:
     y: 0
 
 window:
+  opacity: 0.9
   padding:
     x: 2
     y: 2

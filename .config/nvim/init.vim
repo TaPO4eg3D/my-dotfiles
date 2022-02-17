@@ -94,6 +94,11 @@ call minpac#add('michal-h21/vim-zettel')
 call minpac#add('dhruvasagar/vim-table-mode')
 " Support for discord rich presence, just for lulz
 call minpac#add('vimsence/vimsence')
+" Support of Vue.js syntax highlighting
+call minpac#add('posva/vim-vue')
+" Support of Treesitter
+call minpac#add('nvim-treesitter/nvim-treesitter')
+call minpac#add('nvim-treesitter/playground')
 " ======================================================================
 " Plugins END
 " ======================================================================
