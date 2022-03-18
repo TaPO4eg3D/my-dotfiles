@@ -12,6 +12,7 @@ require 'c-langs-lsp'
 require 'rust-lsp'
 require 'html-lsp'
 require 'vue-lsp'
+require 'init'
 
 -- LSP Better UI
 local saga = require 'lspsaga'
