@@ -8,9 +8,9 @@ import inotify.adapters
 import inotify.constants as ic
 
 _logger = logging.getLogger(__name__)
-_logger.setLevel(logging.DEBUG)
+_logger.setLevel(logging.INFO)
 
-THROTTLING_SEC = 5
+THROTTLING_SEC = 120
 LIST_OF_PATH_TO_WATCH = f'{os.environ.get("HOME")}/.sync-list'
 
 NOTIFY_MASK = (
@@ -44,7 +44,7 @@ def create_watcher(system_path, cloud_path):
     i = inotify.adapters.InotifyTree(system_path, mask=NOTIFY_MASK)
 
     def call_rclone():
-        print('Calling rclone...')
+        _logger.info('Calling rclone...')
         os.system(f'rclone sync {system_path} {cloud_path}')
 
     rclone = debounce(THROTTLING_SEC)(call_rclone)
@@ -54,7 +54,7 @@ def create_watcher(system_path, cloud_path):
             continue
 
         (_, type_names, path, filename) = event
-        print(f'Syncing "{filename}" in "{path}": {",".join(type_names)}')
+        _logger.info(f'Syncing "{filename}" in "{path}": {",".join(type_names)}')
         rclone()
 
 
