@@ -1,8 +1,85 @@
-#! /usr/bin/env bash
-inotifywait -e close_write,moved_to,create -m -r ~/Zettelkasten |
-while read -r directory events filename; do
-  echo "Uploading to cloud because '$filename' changed"
-  echo "Skipping $(timeout 15 cat | wc -l) further changes"
-  rclone sync ~/Zettelkasten YandexDisk:Zettelkasten
-  echo "Done uploading to cloud!"
-done
+#!/usr/bin/env python3
+
+import os
+import logging
+import threading
+
+import inotify.adapters
+import inotify.constants as ic
+
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
+
+THROTTLING_SEC = 5
+LIST_OF_PATH_TO_WATCH = f'{os.environ.get("HOME")}/.sync-list'
+
+NOTIFY_MASK = (
+    ic.IN_MODIFY |
+    ic.IN_MOVE |
+    ic.IN_CREATE |
+    ic.IN_DELETE 
+)
+
+
+def debounce(wait_time):
+    def decorator(function):
+        def debounced(*args, **kwargs):
+            def call_function():
+                debounced._timer = None
+                return function(*args, **kwargs)
+
+            if debounced._timer is not None:
+                debounced._timer.cancel()
+
+            debounced._timer = threading.Timer(wait_time, call_function)
+            debounced._timer.start()
+
+        debounced._timer = None
+        return debounced
+
+    return decorator
+
+
+def create_watcher(system_path, cloud_path):
+    i = inotify.adapters.InotifyTree(system_path, mask=NOTIFY_MASK)
+
+    def call_rclone():
+        print('Calling rclone...')
+        os.system(f'rclone sync {system_path} {cloud_path}')
+
+    rclone = debounce(THROTTLING_SEC)(call_rclone)
+
+    for event in i.event_gen(yield_nones=False):
+        if event is None:
+            continue
+
+        (_, type_names, path, filename) = event
+        print(f'Syncing "{filename}" in "{path}": {",".join(type_names)}')
+        rclone()
+
+
+def main():
+    threads = list()
+
+    with open(LIST_OF_PATH_TO_WATCH, 'r') as f:
+        for line in f.readlines():
+            system_path, cloud_path = line.split(';')
+            system_path = system_path.replace(
+                '~', os.environ.get('HOME') or '~',
+            )
+            
+            thread = threading.Thread(
+                target=create_watcher,
+                args=(system_path, cloud_path,),
+                daemon=True,
+            )
+            threads.append(thread)
+
+            thread.start()
+
+    for thread in threads:
+        thread.join()
+
+
+if __name__ == '__main__':
+    main()
