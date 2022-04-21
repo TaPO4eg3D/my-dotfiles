@@ -1,62 +1,27 @@
-# Colors (Dracula)
-colors:
-  # Default colors
-  primary:
-    background: '0x282a36'
-    foreground: '0xf8f8f2'
+################################################
+#  ██████╗██████╗ ██╗   ██╗██╗     ██╗ █████╗  #
+# ██╔════╝██╔══██╗╚██╗ ██╔╝██║     ██║██╔══██╗ #
+# ██║     ██████╔╝ ╚████╔╝ ██║     ██║███████║ #
+# ██║     ██╔══██╗  ╚██╔╝  ██║     ██║██╔══██║ #
+# ╚██████╗██║  ██║   ██║   ███████╗██║██║  ██║ #
+#  ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝╚═╝  ╚═╝ #
+################################################
 
-    # Bright and dim foreground colors
-    #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    #dim_foreground: '0x9a9a9a'
-    #bright_foreground: '0xffffff'
-
-  # Cursor colors
-  #
-  # Colors which should be used to draw the terminal cursor. If these are unset,
-  # the cursor color will be the inverse of the cell color.
-  cursor:
-    text: '0x44475a'
-    cursor: '0xf8f8f2'
-
-  # Normal colors
-  normal:
-    black:   '0x000000'
-    red:     '0xff5555'
-    green:   '0x50fa7b'
-    yellow:  '0xf1fa8c'
-    blue:    '0xbd93f9'
-    magenta: '0xff79c6'
-    cyan:    '0x8be9fd'
-    white:   '0xbfbfbf'
-
-  # Bright colors
-  bright:
-    black:   '0x4d4d4d'
-    red:     '0xff6e67'
-    green:   '0x5af78e'
-    yellow:  '0xf4f99d'
-    blue:    '0xcaa9fa'
-    magenta: '0xff92d0'
-    cyan:    '0x9aedfe'
-    white:   '0xe6e6e6'
-
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  dim:
-    black:   '0x14151b'
-    red:     '0xff2222'
-    green:   '0x1ef956'
-    yellow:  '0xebf85b'
-    blue:    '0x4d5b86'
-    magenta: '0xff46b0'
-    cyan:    '0x59dffc'
-    white:   '0xe6e6d1'
-
+# Set the window Width and Height in console columns.
+# The window size will change if the font size changes.
+window:
+  dimensions:
+    columns: 110
+    lines: 30
+  decorations: full
+  startup_mode: Windowed
+  title: "Alacritty Terminal"
+  dynamic_title: true
+# Scrolling history and multiplier
+scrolling:
+  history: 10000
+  multiplier: 3
+# Font family and style
 font:
   normal:
     family: "JetBrainsMono Nerd Font Mono"
@@ -66,51 +31,78 @@ font:
     style: Bold
   italic:
     family: "JetBrainsMono Nerd Font Mono"
-    style: Italic
+    style: italic
   bold_italic:
     family: "JetBrainsMono Nerd Font Mono"
     style: Bold Italic
-
-  # Point size
-  size: 10.0
-
+  size: 9.0
   offset:
     x: 0
     y: 0
-  glyph_offset:
-    x: 0
-    y: 0
-
+  draw_bold_text_with_bright_colors: false
+# Background opacity from 0.0 transparent, 1.0 Opaque
 window:
-  opacity: 0.9
-  padding:
-    x: 2
-    y: 2
+  opacity: 0.6
+# Terminal colors
+colors:
+  primary:
+    background: '#000000'
+    foreground: '#FFFFFF'
+  cursor:
+    cursor: '#00b8ff'
+  search:
+    matches:
+      foreground: '#000000'
+      background: '#EA80FC'
+    focus_match:
+      foreground: '#000000'
+      background: '#E040FB'
+    bar:
+      foreground: '#B388FF'
+      background: '#121212'
+  selection:
+    text: '#EA80FC'
+    background: '#121212'
+  normal:
+    black: '#121212'
+    red: '#ff5252'
+    green: '#8BC34A'
+    yellow: '#FFFF00'
+    blue: '#82B1FF'
+    magenta: '#EA80FC'
+    cyan: '#84FFFF'
+    white: '#FFFFFF'
+  bright:
+    black: '#363636'
+    red: '#ef9a9a'
+    green: '#A5D6A7'
+    yellow: '#FFF59D'
+    blue: '#90CAF9'
+    magenta: '#CE93D8'
+    cyan: '#80DEEA'
+    white: '#FFFFFF'
+# Cursor styling
+cursor:
+  style: Beam
+  thickness: 0.2
+  unfocused_hollow: false
+  blink_interval: 750
 
-scrolling:
-  # Maximum number of lines in the scrollback buffer.
-  # Specifying '0' will disable scrolling.
-  history: 10000
+################################################################################
+# ███████╗██╗  ██╗ ██████╗ ██████╗ ████████╗ ██████╗██╗   ██╗████████╗███████╗ #
+# ██╔════╝██║  ██║██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██║   ██║╚══██╔══╝██╔════╝ #
+# ███████╗███████║██║   ██║██████╔╝   ██║   ██║     ██║   ██║   ██║   ███████╗ #
+# ╚════██║██╔══██║██║   ██║██╔══██╗   ██║   ██║     ██║   ██║   ██║   ╚════██║ #
+# ███████║██║  ██║╚██████╔╝██║  ██║   ██║   ╚██████╗╚██████╔╝   ██║   ███████║ #
+# ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝ #
+################################################################################                                                                            
 
-  # Number of lines the viewport will move for every line scrolled when
-  # scrollback is enabled (history > 0).
-  multiplier: 10
+# Mouse
+mouse_bindings:
+ - { mouse: Right, action: Paste }
 
-# If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
-
-selection:
-  semantic_escape_chars: ',│`|:"'' ()[]{}<>'
-  save_to_clipboard: true
-
-live_config_reload: true
-
-env:
-  TERM: xterm-256color
-  WINIT_X11_SCALE_FACTOR: "1.0"
-
+# Keyboard
 key_bindings:
-  - { key: Key0, mods: Control, action: ResetFontSize }
-  - { key: Equals, mods: Control, action: IncreaseFontSize }
-  - { key: Plus, mods: Control, action: IncreaseFontSize }
-  - { key: Minus, mods: Control, action: DecreaseFontSize }
+ - { key: C, mods: Control|Shift, action: Copy }
+ - { key: V, mods: Control|Shift, action: Paste }
+ - { key: C, mods: Control, mode: Vi, action: ClearSelection }

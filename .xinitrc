@@ -69,23 +69,7 @@ if [[ $XRANDR_SET == 0 ]]; then
   xrandr --auto
 fi
 
-# Launcing compositor for transparancy
-picom &
-# Launching notifaction manager
-dunst &
-
-# Setting up a background
-bgchange &
-
-# Statusbar for DWM
-dwmblocks &
-
-# Fix for Java applications
-# https://wiki.archlinux.org/title/java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
-wmname compiz &
-
-
 # Support for NVIDIA Optimus
 /usr/bin/prime-offload
-dwm
+awesome
 sudo /usr/bin/prime-switch
