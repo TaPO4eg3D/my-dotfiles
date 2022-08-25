@@ -1,0 +1,20 @@
+snippet dto
+    ${1:dto_name}.set(
+        new_values=DTOValues(
+            ${2:key}=${3:value}
+        ),
+        place_of_change=${4:self.__class__.__name__},
+        reason='${0:reason}',
+    )
+
+snippet ibk
+    import ipdb; ipdb.set_trace()
+
+snippet ibi
+    # ====== BREAKPOINT ========
+    from functools import partial
+    from deploy.local.django.ipython_config_vi import c as ipfc
+    from IPython import embed;
+    em = partial(embed, config=ipfc)
+    import ipdb; ipdb.set_trace()
+    # ====== END BREAKPOINT ====

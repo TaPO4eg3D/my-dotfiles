@@ -123,3 +123,4 @@ alias vimdiff='nvim -d'
 gch() {
  git checkout `$(git branch --all | fzf | tr -d '[:space:]')`
 }
+export PATH=$PATH:/home/tapo4eg3d/.spicetify
