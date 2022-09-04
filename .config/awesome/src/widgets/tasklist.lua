@@ -1,3 +1,8 @@
+---------------------------------
+-- This is the tasklist widget --
+---------------------------------
+
+-- Awesome Libs
 local awful = require('awful')
 local wibox = require('wibox')
 local dpi = require('beautiful').xresources.apply_dpi
@@ -6,9 +11,7 @@ local color = require('src.theme.colors')
 
 local list_update = function(widget, buttons, label, data, objects)
 	widget:reset()
-	local count
-	for i, object in ipairs(objects) do
-		count = i
+	for _, object in ipairs(objects) do
 		local task_widget = wibox.widget {
 			{
 				{
@@ -56,7 +59,10 @@ local list_update = function(widget, buttons, label, data, objects)
 		local task_tool_tip = awful.tooltip {
 			objects = { task_widget },
 			mode = "inside",
-			align = "right",
+			preferred_alignments = "middle",
+			preferred_positions = "bottom",
+			margins = dpi(10),
+			gaps = 0,
 			delay_show = 1
 		}
 
@@ -82,7 +88,7 @@ local list_update = function(widget, buttons, label, data, objects)
 
 		task_widget:buttons(create_buttons(buttons, object))
 
-		local text, bg, bg_image, icon, args = label(object, task_widget.container.layout_it.title)
+		local text, _ = label(object, task_widget.container.layout_it.title)
 		if object == client.focus then
 			if text == nil or text == '' then
 				task_widget.container.layout_it.title:set_margins(0)
@@ -111,6 +117,7 @@ local list_update = function(widget, buttons, label, data, objects)
 		widget:add(task_widget)
 		widget:set_spacing(dpi(6))
 
+		--#region Hover_signal
 		local old_wibox, old_cursor, old_bg
 		task_widget:connect_signal(
 			"mouse::enter",
@@ -161,11 +168,13 @@ local list_update = function(widget, buttons, label, data, objects)
 				end
 			end
 		)
+		--#endregion
+
 	end
 	return widget
 end
 
-local tasklist = function(s)
+return function(s)
 	return awful.widget.tasklist(
 		s,
 		awful.widget.tasklist.filter.currenttags,
@@ -199,5 +208,3 @@ local tasklist = function(s)
 		wibox.layout.fixed.horizontal()
 	)
 end
-
-return tasklist
