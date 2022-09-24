@@ -70,9 +70,17 @@ M.map("n", "<leader>fI", [[:Rg<CR>]])
 
 -- Debuger mappings
 M.map("n", "<leader>db", [[<cmd>lua require('dap').toggle_breakpoint()<CR>]])
+-- M.map("n", "<leader>dB", [[<cmd>lua require('dap').toggle_breakpoint()<CR>]])
+
 M.map("n", "<leader>dc", [[<cmd>lua require('dap').continue()<CR>]])
+M.map("n", "<F4>", [[<cmd>lua require('dap').continue()<CR>]])
+
 M.map("n", "<leader>dn", [[<cmd>lua require('dap').step_over()<CR>]])
+M.map("n", "<F5>", [[<cmd>lua require('dap').step_over()<CR>]])
+
 M.map("n", "<leader>di", [[<cmd>lua require('dap').step_into()<CR>]])
+M.map("n", "<F6>", [[<cmd>lua require('dap').step_into()<CR>]])
+
 M.map("n", "<leader>du", [[<cmd>lua require('dapui').toggle()<CR>]])
 
 return M

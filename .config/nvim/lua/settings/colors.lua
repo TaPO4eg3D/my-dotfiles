@@ -9,7 +9,6 @@ vim.api.nvim_set_hl(
 
 -- Set "Dracula" colorscheme
 cmd.syntax("enable")
-cmd("packadd! dracula")
 cmd.colorscheme("dracula")
 
 -- Use true colors

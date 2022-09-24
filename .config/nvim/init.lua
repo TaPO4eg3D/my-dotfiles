@@ -1,3 +1,6 @@
+-- Cache lua, hence optimize startup
+require('impatient')
+
 require("plugins")
 require("lsp")
 require("settings")
