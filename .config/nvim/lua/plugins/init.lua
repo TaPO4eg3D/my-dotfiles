@@ -1,7 +1,4 @@
 local fn = vim.fn
-local cmd = vim.cmd
-
--- cmd.packadd("packer")
 
 local packerstart =  require('packer').startup(function(use)
     -- Work with "surroundings": parentheses, brackets, quotes and so on
@@ -17,8 +14,8 @@ local packerstart =  require('packer').startup(function(use)
     -- Nice looking VIM Theme
     use("dracula/vim", {name = 'dracula'})
     use("tpope/vim-commentary")
-    use("jlanzarotta/bufexplorer")
     use("raimondi/delimitmate")
+    use("jlanzarotta/bufexplorer")
     -- Add markdown support
     use("godlygeek/tabular")
     use("plasticboy/vim-markdown")
@@ -81,9 +78,6 @@ local packerstart =  require('packer').startup(function(use)
     use("mfussenegger/nvim-dap-python")
     use("rcarriga/nvim-dap-ui")
     use("theHamsta/nvim-dap-virtual-text")
-
-    -- FIXME: Fix performance for CursorHold. Probably delete when the fix is in upstream
-    use("antoinemadec/FixCursorHold.nvim")
 
     -- Optimize Neovim startup by caching lua scripts
     use("lewis6991/impatient.nvim")

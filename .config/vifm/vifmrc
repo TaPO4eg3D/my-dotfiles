@@ -282,7 +282,7 @@ fileviewer *.torrent dumptorrent -v %c
 " FuseZipMount
 filetype *.zip,*.jar,*.war,*.ear,*.oxt,*.apkg
        \ {Mount with fuse-zip}
-       \ FUSE_MOUNT|fuse-zip %SOURCE_FILE %DESTINATION_DIR,
+       \ FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR,
        \ {View contents}
        \ zip -sf %c | less,
        \ {Extract here}
@@ -292,7 +292,7 @@ fileviewer *.zip,*.jar,*.war,*.ear,*.oxt zip -sf %c
 " ArchiveMount
 filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,*.txz
        \ {Mount with archivemount}
-       \ FUSE_MOUNT|archivemount %SOURCE_FILE %DESTINATION_DIR,
+       \ FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR,
 fileviewer *.tgz,*.tar.gz tar -tzf %c
 fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
 fileviewer *.tar.txz,*.txz xz --list %c
@@ -303,6 +303,11 @@ filetype *.rar
        \ {Mount with rar2fs}
        \ FUSE_MOUNT|rar2fs %SOURCE_FILE %DESTINATION_DIR,
 fileviewer *.rar unrar v %c
+
+" 7z mount
+filetype *.7z
+       \ {Mount with fuse-archive}
+       \ FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR,
 
 " IsoMount
 filetype *.iso

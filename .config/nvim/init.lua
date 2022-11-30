@@ -18,6 +18,7 @@ vim.api.nvim_create_autocmd({"BufReadPost", "FileReadPost"}, {
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "c",
+        "cpp",
         "lua",
         'html',
         'python',

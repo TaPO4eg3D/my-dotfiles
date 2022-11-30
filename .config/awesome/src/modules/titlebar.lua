@@ -8,6 +8,7 @@ local color = require("src.theme.colors")
 local dpi = require("beautiful").xresources.apply_dpi
 local gears = require("gears")
 local wibox = require("wibox")
+local naughty = require('naughty');
 require("src.core.signals")
 
 -- Icon directory path
