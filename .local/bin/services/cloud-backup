@@ -18,18 +18,16 @@ NOTIFY_MASK = (
 )
 
 
-def debounce(wait_time):
+def postponed_call(wait_time):
     def decorator(function):
         def debounced(*args, **kwargs):
             def call_function():
                 debounced._timer = None
                 return function(*args, **kwargs)
 
-            if debounced._timer is not None:
-                debounced._timer.cancel()
-
-            debounced._timer = threading.Timer(wait_time, call_function)
-            debounced._timer.start()
+            if debounced._timer is None:
+                debounced._timer = threading.Timer(wait_time, call_function)
+                debounced._timer.start()
 
         debounced._timer = None
         return debounced
@@ -44,7 +42,7 @@ def create_watcher(system_path, cloud_path):
         print('Calling rclone...')
         os.system(f'rclone sync {system_path} {cloud_path}')
 
-    rclone = debounce(THROTTLING_SEC)(call_rclone)
+    rclone = postponed_call(THROTTLING_SEC)(call_rclone)
 
     for event in i.event_gen(yield_nones=False):
         if event is None:

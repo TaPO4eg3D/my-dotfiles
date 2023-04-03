@@ -26,14 +26,14 @@ font:
   bold_italic:
     family: "JetBrainsMono Nerd Font Mono"
     style: Bold Italic
-  size: 7.5
+  size: 9
   offset:
     x: 0
     y: 0
   draw_bold_text_with_bright_colors: false
 # Background opacity from 0.0 transparent, 1.0 Opaque
 window:
-  opacity: 1
+  opacity: 0.8
 
 # Mouse
 mouse_bindings:
