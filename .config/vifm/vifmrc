@@ -293,19 +293,19 @@ fileviewer *.zip,*.jar,*.war,*.ear,*.oxt zip -sf %c
 filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,*.txz
        \ {Mount with archivemount}
        \ FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR,
-fileviewer *.tgz,*.tar.gz tar -tzf %c
-fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
-fileviewer *.tar.txz,*.txz xz --list %c
-fileviewer *.tar tar -tf %c
+" fileviewer *.tgz,*.tar.gz tar -tzf %c
+" fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
+" fileviewer *.tar.txz,*.txz xz --list %c
+" fileviewer *.tar tar -tf %c
 
 " Rar2FsMount and rar archives
 filetype *.rar
        \ {Mount with rar2fs}
-       \ FUSE_MOUNT|rar2fs %SOURCE_FILE %DESTINATION_DIR,
-fileviewer *.rar unrar v %c
+       \ FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR,
+" fileviewer *.rar unrar v %c
 
 " 7z mount
-filetype *.7z
+filetype *.7z,*.xmz
        \ {Mount with fuse-archive}
        \ FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR,
 
@@ -502,7 +502,7 @@ set timefmt='%Y-%m-%d %H:%M'
 set viewcolumns=-80%{name},10%{ext},10%{mtime}
 
 " Support of drag and drop
-command! dragon dragon-drag-and-drop -a -x %f
+command! dragon dragon-drop -a -x %f
 nmap <C-f> :dragon<CR>
 
 " Support archive extracting

@@ -6,6 +6,24 @@ return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		cmd = "Neotree",
+		dependencies = {
+			{
+				"s1n7ax/nvim-window-picker",
+				opts = {
+					include_current = false,
+					filter_rules = {
+						-- filter using buffer options
+						bo = {
+							-- if the file type is one of following, the window will be ignored
+							filetype = { "neo-tree", "neo-tree-popup", "notify" },
+
+							-- if the buffer type is one of following, the window will be ignored
+							buftype = { "terminal", "quickfix" },
+						},
+					},
+				},
+			},
+		},
 		keys = {
 			{
 				"<leader>nn",
@@ -44,6 +62,7 @@ return {
 			window = {
 				mappings = {
 					["<space>"] = "none",
+					["<cr>"] = "open_with_window_picker",
 				},
 			},
 			default_component_configs = {
@@ -66,20 +85,46 @@ return {
     },
 	},
 
-	-- fuzzy finder
+	-- NeoGit
+	{
+		"TimUntersberger/neogit",
+		cmd = "Neogit",
+		keys = {
+			{
+				"<leader>M",
+				function()
+					require("neogit").open()
+				end,
+				desc = "Open NeoGit",
+			},
+		},
+	},
+
+	-- fzf-lua
+	{
+		"ibhagwan/fzf-lua",
+		cmd = "FzfLua",
+		opts = {
+			"telescope",
+			winopts = {
+				preview = {
+					default = "bat",
+				},
+			},
+		},
+		keys = {
+			{ "<leader>o", "<cmd>FzfLua buffers<cr>", desc = "Switch Buffer" },
+			{ "<leader>fi", "<cmd>FzfLua live_grep<cr>", desc = "Find in Files (Grep)" },
+			{ "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files" },
+		},
+	},
+
+	-- Telescope
 	{
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
 		version = false, -- telescope did only one release, so use HEAD for now
 		keys = {
-			{ "<leader>o", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-			{ "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-			-- find
-			{ "<leader>fi", Util.telescope("live_grep"), desc = "Find in Files (Grep)" },
-			{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-			{ "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
-			{ "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
-			{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
 			-- git
 			{ "<leader>fc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
 			{ "<leader>fs", "<cmd>Telescope git_status<CR>", desc = "status" },
