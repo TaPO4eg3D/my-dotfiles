@@ -1,51 +1,24 @@
-local M = {}
+-- Leader key
+vim.g.mapleader = " "
 
-M.did_init = false
-M.colorscheme = "tokyonight"
+local opt = vim.opt
 
-function M.load(name)
-	local Util = require("lazy.core.util")
+-- Sync with the system clipboard
+opt.clipboard = "unnamedplus"
 
-	local function _load(mod)
-		Util.try(function()
-			require(mod)
-		end, {
-			msg = "Failed loading " .. mod,
-			on_error = function(msg)
-				local info = require("lazy.core.cache").find(mod)
-				if info == nil or (type(info) == "table" and #info == 0) then
-					return
-				end
-				Util.error(msg)
-			end,
-		})
-	end
+-- Global tab sizing
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true  -- Always use spaces insteqad of tab chars
+opt.softtabstop = 4
 
-	_load("config." .. name)
-end
+-- Relative line numbers
+opt.nu = true
+opt.rnu = true
 
-function M.init()
-	if not M.did_init then
-		M.did_init = true
-		-- delay notifications till vim.notify was replaced or after 500ms
-		require("utils.general").lazy_notify()
+opt.termguicolors = true -- True color support
 
-		-- load options here, before lazy init while sourcing plugin modules
-		-- this is needed to make sure options will be correctly applied
-		-- after installing missing plugins
-		require("config").load("options")
+opt.splitbelow = true -- Put new windows below current
+opt.splitright = true -- Put new windows right of current
 
-		M.load("autocmds")
-		M.load("keymaps")
-
-		require(M.colorscheme).load({
-			transparent = true,
-			styles = {
-				sidebars = "transparent",
-				floats = "transparent",
-			},
-		})
-	end
-end
-
-return M
+-- opt.wrap = false -- Disable line wrap
