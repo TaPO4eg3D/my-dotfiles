@@ -21,4 +21,6 @@ opt.termguicolors = true -- True color support
 opt.splitbelow = true -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 
+opt.swapfile = false
+opt.backup = false
 -- opt.wrap = false -- Disable line wrap

@@ -1,4 +1,5 @@
 return {
+  -- Fuzzy finder
   {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
@@ -31,6 +32,56 @@ return {
         "<leader>fh",
         "<cmd>FzfLua help_tags<cr>",
         desc = "Search NeoVim help tags",
+      },
+    },
+  },
+
+  -- file explorer
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    keys = {
+      {
+        "<leader>nn",
+        "<cmd>Neotree<CR>",
+        desc = "Explorer NeoTree",
+      },
+    },
+    deactivate = function()
+      vim.cmd([[Neotree close]])
+    end,
+    init = function()
+      vim.g.neo_tree_remove_legacy_commands = 1
+
+      -- Open NeoTree if NeoVim was opened with a directory as an argument
+      if vim.fn.argc() == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+          require("neo-tree")
+        end
+      end
+    end,
+    opts = {
+      filesystem = {
+        bind_to_cwd = false,
+        follow_current_file = true,
+        use_libuv_file_watcher = true,
+      },
+      window = {
+        mappings = {
+          ["<space>"] = "none",
+        },
+      },
+      default_component_configs = {
+        indent = {
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
+        },
       },
     },
   },

@@ -7,14 +7,6 @@ return {
     },
     dependencies = { 
       -- Extension of LSP capabitlites
-      {
-        "folke/neodev.nvim",
-        opts = { 
-          experimental = {
-            pathStrict = true,
-          },
-        },
-      },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
@@ -24,7 +16,7 @@ return {
       },
     },
     config = function(_, opts)
-      local coq = require("coq")
+      -- local coq = require("coq")
       local utils = require("utils")
       local servers = opts.servers
 
@@ -32,7 +24,7 @@ return {
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        coq.lsp_ensure_capabilities(),
+        -- coq.lsp_ensure_capabilities(),
         opts.capabilities or {}
       )
 
@@ -68,6 +60,17 @@ return {
       }
     end,
 	},
+
+  -- Rust tooling
+  {
+    "simrat39/rust-tools.nvim",
+    ft = { "rust" },
+    opts = {},
+    dependencies = {
+      "plenary.nvim",
+      "nvim-lspconfig",
+    },
+  },
 
   -- LSP and DAP manager
   {
