@@ -26,14 +26,14 @@ font:
   bold_italic:
     family: "JetBrainsMono Nerd Font Mono"
     style: Bold Italic
-  size: 9
+  size: 11
   offset:
     x: 0
     y: 0
   draw_bold_text_with_bright_colors: false
 # Background opacity from 0.0 transparent, 1.0 Opaque
 window:
-  opacity: 0.8
+  opacity: 0.9
 
 # Mouse
 mouse_bindings:
@@ -46,4 +46,4 @@ key_bindings:
  - { key: C, mods: Control, mode: Vi, action: ClearSelection }
 
 import:
-  - ~/.config/alacritty/dracula.yml
+  - ~/.config/alacritty/tokyo-night.yaml

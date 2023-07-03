@@ -13,7 +13,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("config")
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+  dev = {
+    path = "~/neovim_plugins/"
+  },
+})
 
 require("config.colors")
 require("config.keymaps")

@@ -119,6 +119,7 @@ alias vim="nvim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias steamguard='mono /usr/local/bin/steamguard'
 alias vimdiff='nvim -d'
+alias dragon-drop11='GDK_BACKEND=x11 dragon-drop'
 
 gch() {
  git checkout `$(git branch --all | fzf | tr -d '[:space:]')`

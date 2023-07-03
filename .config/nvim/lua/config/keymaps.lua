@@ -19,3 +19,15 @@ map("n", "<A-j>", "<C-w>j")
 map("n", "<A-l>", "<C-w>l")
 map("n", "<A-k>", "<C-w>k")
 
+-- Resize window using <ctrl-direction>
+map("n", "<C-k>", "<cmd>resize +2<cr>")
+map("n", "<C-j>", "<cmd>resize -2<cr>")
+map("n", "<C-h>", "<cmd>vertical resize -2<cr>")
+map("n", "<C-l>", "<cmd>vertical resize +2<cr>")
+
+-- Cycle buffers
+map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+
+-- lazy
+map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })
