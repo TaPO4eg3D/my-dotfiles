@@ -101,6 +101,7 @@ return {
       window = {
         mappings = {
           ["<space>"] = "none",
+          ["W"] = "open_with_window_picker",
         },
       },
       default_component_configs = {

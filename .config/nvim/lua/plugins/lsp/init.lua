@@ -29,11 +29,11 @@ local lsp_keymapping = {
     "<cmd>FzfLua lsp_code_actions<CR>",
     desc = "Code Actions",
   },
-  -- {
-  --   "K",
-  --   vim.lsp.hover,
-  --   desc = "Hover",
-  -- },
+  {
+    "K",
+    vim.lsp.buf.hover,
+    desc = "Hover",
+  },
   {
     "<leader>rK",
     vim.lsp.buf.signature_help,
@@ -78,6 +78,7 @@ return {
       -- Extension of LSP capabitlites
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
     },
     opts = {
       servers = {
@@ -105,7 +106,7 @@ return {
       },
     },
     config = function(_, opts)
-      local coq = require("coq")
+      local cmp = require("cmp_nvim_lsp")
       local utils = require("utils")
       local servers = opts.servers
 
@@ -113,7 +114,7 @@ return {
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        coq.lsp_ensure_capabilities(),
+        cmp.default_capabilities(),
         opts.capabilities or {}
       )
 
