@@ -118,6 +118,7 @@ return {
   {
     "tapo4eg3d/instance-switcher",
     dev = true,
+    lazy = true,
     opts = {
       rules = {
         {
@@ -149,14 +150,8 @@ return {
 
   -- Git integration
   {
-    "TimUntersberger/neogit",
-    cmd = "Neogit",
-    keys = {
-      {
-        "<leader>M",
-        "<cmd>Neogit<CR>",
-        desc = "Run NeoGit"
-      },
-    },
-  }
+    "tpope/vim-fugitive",
+    version = false,
+    cmd = "Git",
+  },
 }

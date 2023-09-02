@@ -17,7 +17,8 @@
     "cpu",
     "memory",
     "custom/updates",
-    "custom/language",
+    //"custom/language",
+    "hyprland/language",
     "pulseaudio",
     "pulseaudio#microphone",
     "clock"
@@ -25,7 +26,7 @@
   "hyprland/window": {
     "format": "{}"
   },
-  "wlr/workspaces": {
+  "hyprland/workspaces": {
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
     "all-outputs": true,
@@ -45,26 +46,32 @@
   },
   "cpu": {
     "interval": 10,
-    "format": " {}%",
+    "format": " {}%",
     "max-length": 10,
     "on-click": ""
   },
   "memory": {
     "interval": 30,
-    "format": " {}%",
+    "format": " {}%",
     "format-alt": " {used:0.1f}G",
     "max-length": 10
   },
   "custom/updates": {
     "exec": "(paru -Qua) | wc -l",
     "interval": 7200,
-    "format": " {}"
+    "format": "󰚰 {}"
   },
-  "custom/language": {
-    "exec": "cat /tmp/kb_layout",
-    "interval": 3,
-    "format": " {}",
-    "tooltip": false
+  // "custom/language": {
+  //   "exec": "cat /tmp/kb_layout",
+  //   "interval": 3,
+  //   "format": "󰌌 {}",
+  //   "tooltip": false
+  // },
+  "hyprland/language": {
+      "format": "󰌌 {}",
+      "format-ru": "RU",
+      "format-en": "ENG",
+      "keyboard-name": "gaming-keyboard"
   },
   "tray": {
     "icon-size": 13,
@@ -100,8 +107,8 @@
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "tooltip": false,
-    "format-source": " {volume}%",
-    "format-source-muted": " Muted",
+    "format-source": " {volume}%",
+    "format-source-muted": "󰍭 Muted",
     "on-click": "pamixer --default-source -t",
     "on-scroll-up": "pamixer --default-source -i 5",
     "on-scroll-down": "pamixer --default-source -d 5",

@@ -67,8 +67,14 @@ return {
               buftype = { 'terminal', "quickfix" },
             },
           },
-          other_win_hl_color = '#e35e4f',
-        }
+          highlights = {
+            statusline = {
+              unfocused = {
+                bg = "#f051c6",
+              },
+            }
+          },
+        },
       }
     },
     keys = {
@@ -95,7 +101,9 @@ return {
     opts = {
       filesystem = {
         bind_to_cwd = false,
-        follow_current_file = true,
+        follow_current_file = {
+          enabled = true,
+        },
         use_libuv_file_watcher = true,
       },
       window = {
