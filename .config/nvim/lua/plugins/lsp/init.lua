@@ -74,7 +74,7 @@ return {
       "BufReadPre",
       "BufNewFile",
     },
-    dependencies = { 
+    dependencies = {
       -- Extension of LSP capabitlites
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -89,7 +89,7 @@ return {
                 version = 'LuaJIT',
               },
               diagnostics = {
-                globals = {'vim'},
+                globals = { 'vim' },
               },
               workspace = {
                 -- Make the server aware of Neovim runtime files
@@ -152,13 +152,33 @@ return {
         },
       }
     end,
-	},
+  },
 
   -- Rust tooling
   {
     "simrat39/rust-tools.nvim",
     ft = { "rust" },
-    opts = {},
+    opts = function()
+      local pkg_path = vim.fn.stdpath("data") .. "/mason/packages"
+      local ext_path = pkg_path .. "/codelldb/extension"
+
+      local codelldb_path = ext_path .. "/adapter/codelldb"
+      local liblldb_path = ext_path .. "/lldb/lib/liblldb.so"
+
+      return {
+        dap = {
+          adapter = {
+            type = "server",
+            port = "${port}",
+            host = "127.0.0.1",
+            executable = {
+              command = codelldb_path,
+              args = { "--liblldb", liblldb_path, "--port", "${port}" },
+            },
+          }
+        }
+      }
+    end,
     dependencies = {
       "plenary.nvim",
       "nvim-lspconfig",
@@ -173,7 +193,7 @@ return {
       "<leader>m",
       "<cmd>Mason<CR>",
       desc = "Open Mason",
-    }, 
+    },
     opts = {
       ensure_installed = {
         "stylua",

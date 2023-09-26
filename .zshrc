@@ -108,7 +108,7 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Source SecureEnvs that doesn't mean to go into Git Repo
-source $HOME/.secure_envs
+export $(cat $HOME/.secure_envs | xargs)
 
 export TERM=xterm-256color
 export MANPAGER='nvim +Man!'

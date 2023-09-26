@@ -84,6 +84,9 @@ return {
       python = {},
     }
 
+    -- TODO: Extract general configs to a separate files?
+
+    -- General Python Configuration
     dap.adapters.python = function(cb, config)
       if config.request == 'attach' then
         ---@diagnostic disable-next-line: undefined-field

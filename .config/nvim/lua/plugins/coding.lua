@@ -18,15 +18,15 @@ return {
     },
     -- stylua: ignore
     keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
-      },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+      -- {
+      --   "<tab>",
+      --   function()
+      --     return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+      --   end,
+      --   expr = true, silent = true, mode = "i",
+      -- },
+      -- { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
+      -- { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
     },
   },
   -- auto completion
@@ -38,6 +38,17 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "saadparwaiz1/cmp_luasnip",
+      {
+        {
+          "zbirenbaum/copilot-cmp",
+          dependencies = {
+            "zbirenbaum/copilot.lua",
+          },
+          config = function ()
+            require("copilot_cmp").setup()
+          end
+        }
+      }
     },
     opts = function()
       local cmp = require("cmp")
