@@ -31,3 +31,28 @@ map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 
 -- lazy
 map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })
+
+-- Tabs
+map("n", "<leader>tn", "<cmd>:tabnew<cr>", { desc = "New tab" })
+map("n", "<leader>th", "<cmd>:tabprevious<cr>", { desc = "Previous tab" })
+map("n", "<leader>tl", "<cmd>:tabnext<cr>", { desc = "Next tab" })
+map("n", "<leader>tc", "<cmd>:tabclose<cr>", { desc = "Close the tab" })
+
+-- Documenting available keymappings and groups
+local wk = require('which-key')
+wk.register({
+  ["<leader>"] = {
+    f = {
+      name = "operations with files",
+    },
+    d = {
+      name = "debugger control"
+    },
+    g = {
+      name = "git operations"
+    },
+    t = {
+      name = "tabs operations"
+    }
+  }
+})

@@ -138,6 +138,7 @@ return {
   },
 
   -- Formatters
+  -- TODO: Delete it? It's archived now
   {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },

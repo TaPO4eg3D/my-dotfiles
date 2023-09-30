@@ -42,7 +42,10 @@ return {
         {
           "zbirenbaum/copilot-cmp",
           dependencies = {
-            "zbirenbaum/copilot.lua",
+            {
+              "zbirenbaum/copilot.lua",
+              opts = {}
+            }
           },
           config = function ()
             require("copilot_cmp").setup()
@@ -56,7 +59,7 @@ return {
 
       return {
         completion = {
-          completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,noselect,preview,noinsert",
         },
         snippet = {
           expand = function(args)
@@ -80,6 +83,7 @@ return {
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "path" },
+          { name = "copilot" },
         }),
         sorting = defaults.sorting,
       }
@@ -165,4 +169,31 @@ return {
     version = false,
     cmd = "Git",
   },
+
+  -- Nice DiffView to resolve merge confilicts / observe diffs
+  {
+    "sindrets/diffview.nvim",
+    lazy = true,
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewFileHistory",
+    }
+  },
+
+  -- NeoGit just to try it out
+  {
+    "NeogitOrg/neogit",
+    cmd = {
+      "Neogit",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "ibhagwan/fzf-lua",
+    },
+    opts = {
+      integrations = {
+        telescope = nil,
+      },
+    },
+  }
 }

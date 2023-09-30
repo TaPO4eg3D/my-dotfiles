@@ -21,3 +21,4 @@ require("lazy").setup("plugins", {
 
 require("config.colors")
 require("config.keymaps")
+require("config.autocmds")
