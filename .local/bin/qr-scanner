@@ -2,10 +2,10 @@
 
 # Extracting image from clipboard and save it to /tmp
 QR_IMAGE_PATH=/tmp/qr-scanner.png
-xclip -selection clipboard -t image/png -o > $QR_IMAGE_PATH
+wl-paste -t image/png > $QR_IMAGE_PATH
 
 # Decoding QR Image and copy decoded text to clipboard
 QR_RAW=`zbarimg $QR_IMAGE_PATH --quiet --raw`
-echo $QR_RAW | xclip -selection clipboard
+echo $QR_RAW | wl-copy
 
 notify-send "QR Decoded!" "$QR_RAW"

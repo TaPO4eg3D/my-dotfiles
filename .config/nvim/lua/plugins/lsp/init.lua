@@ -43,16 +43,7 @@ local lsp_keymapping = {
 
 local function set_keymaps(client, buffer)
   local Keys = require("lazy.core.handler.keys")
-  local keymaps = {} ---@type table<string,LazyKeys|{has?:string}>
-
-  for _, value in ipairs(lsp_keymapping) do
-    local keys = Keys.parse(value)
-    if keys[2] == vim.NIL or keys[2] == false then
-      keymaps[keys.id] = nil
-    else
-      keymaps[keys.id] = keys
-    end
-  end
+  local keymaps = Keys.resolve(lsp_keymapping)
 
   for _, keys in pairs(keymaps) do
     if not keys.has or client.server_capabilities[keys.has .. "Provider"] then
@@ -62,7 +53,7 @@ local function set_keymaps(client, buffer)
       opts.silent = opts.silent ~= false
       opts.buffer = buffer
 
-      vim.keymap.set(keys.mode or "n", keys[1], keys[2], opts)
+      vim.keymap.set(keys.mode or "n", keys.lhs, keys.rhs, opts)
     end
   end
 end
