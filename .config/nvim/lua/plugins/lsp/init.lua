@@ -95,11 +95,15 @@ return {
         ccls = {},
         pyright = {},
         volar = {},
+        docker_compose_language_service = {
+          filetypes = {"yaml"}
+        }
       },
     },
     config = function(_, opts)
       local cmp = require("cmp_nvim_lsp")
       local utils = require("utils")
+      local mason_lsp = require("mason-lspconfig")
       local servers = opts.servers
 
       local capabilities = vim.tbl_deep_extend(
@@ -118,9 +122,16 @@ return {
         require("lspconfig")[server].setup(server_opts)
       end
 
-      -- TODO: Mason integration
+      local installed_servers = mason_lsp.get_installed_servers()
+      local server_keys = {}
 
       for server, _ in pairs(servers) do
+        table.insert(server_keys, server)
+      end
+
+      installed_servers = vim.tbl_extend("force", installed_servers, server_keys)
+
+      for _, server in ipairs(installed_servers) do
         setup(server)
       end
 

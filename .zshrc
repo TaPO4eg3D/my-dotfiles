@@ -124,4 +124,9 @@ alias dragon-drop11='GDK_BACKEND=x11 dragon-drop'
 gch() {
  git checkout `$(git branch --all | fzf | tr -d '[:space:]')`
 }
+
+# Spotify Utility
 export PATH=$PATH:/home/tapo4eg3d/.spicetify
+
+# Utils for cross compilation of MacOS
+export PATH=$PATH:/usr/local/osx-ndk-x86/bin

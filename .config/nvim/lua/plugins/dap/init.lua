@@ -80,13 +80,29 @@ return {
   config = function (_, _)
     local dap = require("dap")
 
+    -- General Python Configuration
+    -- TODO: Extract general configs to a separate files?
     dap.configurations = {
-      python = {},
+      python = {
+        {
+          type = 'python',
+          request = 'attach',
+          name = 'Attach to Running Debugger in Docker',
+          connect = {
+            host = 'localhost',
+            port = 5678,
+          },
+          justMyCode = false,
+          pathMappings = {
+            {
+              localRoot = "${workspaceFolder}",
+              remoteRoot = "/app"
+            }
+          }
+        }
+      },
     }
 
-    -- TODO: Extract general configs to a separate files?
-
-    -- General Python Configuration
     dap.adapters.python = function(cb, config)
       if config.request == 'attach' then
         ---@diagnostic disable-next-line: undefined-field
