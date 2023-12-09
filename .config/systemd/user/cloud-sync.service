@@ -1,0 +1,12 @@
+[Unit]
+Description=Cloud syncing
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/services/cloud-backup
+WorkingDirectory=%h
+Restart=always
+RestartSec=2min
+
+[Install]
+WantedBy=default.target
