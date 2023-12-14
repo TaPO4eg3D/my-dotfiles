@@ -1,0 +1,24 @@
+#!/bin/bash
+
+case "$1" in
+    "c")
+        FILENAME=`cat -`
+        DEST_FILENAME="/tmp/_nsxiv.png"
+
+        FILETYPE=`xdg-mime query filetype $FILENAME`
+
+        if [[ $FILETYPE != "image/png" ]]; then
+            notify-send "Converting to PNG..."
+
+            # Hack, wl-copy only accepts PNGs
+            convert $FILENAME $DEST_FILENAME
+
+            FILENAME=$DEST_FILENAME
+        fi
+
+        wl-copy --type image/png < $FILENAME
+        notify-send "Image copied"
+    ;;
+    *) notify-send "Unknown command"
+    ;;
+esac
