@@ -150,7 +150,7 @@ return {
               db_name = "project"
               host = "postgres"
             else
-              host = string.format("%s-maint.rebotics.net", db_name)
+              host = string.format("%s-proxy.rebotics.net", db_name)
             end
 
             return string.format(

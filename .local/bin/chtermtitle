@@ -11,7 +11,7 @@ then
     exit 1
 fi
 
-NEW_NAME=$(yad --title="Enter Terminal Name" --entry)
+NEW_NAME=$(yad --title="Enter Terminal Name" --entry --fixed)
 
 if ! [[ -z $NEW_NAME ]]
 then

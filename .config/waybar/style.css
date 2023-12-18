@@ -24,6 +24,11 @@ tooltip {
     padding: 5px;
     color: #313244;
     margin-right: 5px;
+    border-bottom: 1px solid white;
+}
+
+#workspaces button.empty {
+    border-bottom: 0px;
 }
 
 #workspaces button.active {
@@ -104,8 +109,9 @@ tooltip {
 
 #window {
     /* border-radius: 10px; */
-    margin-left: 60px;
+    margin-left: 0px;
     margin-right: 60px;
+    border-left: 1px solid red;
 }
 
 #clock {

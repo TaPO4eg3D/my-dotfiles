@@ -7,11 +7,10 @@
   "gtk-layer-shell": true,
   "height": 0,
   "modules-left": [
-    "hyprland/workspaces"
-  ],
-  "modules-center": [
+    "hyprland/workspaces",
     "hyprland/window"
   ],
+  "modules-center": [],
   "modules-right": [
     "tray",
     "cpu",
@@ -45,6 +44,9 @@
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
     "all-outputs": true,
+    "persistent-workspaces": {
+        "*": 9
+    },
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
@@ -95,7 +97,8 @@
   },
   "clock": {
     "format": "{: %R   %d/%m}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "on-click": "yad --calendar --fixed"
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",

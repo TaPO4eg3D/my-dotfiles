@@ -15,6 +15,11 @@ local lsp_keymapping = {
     desc = "Go to definition",
   },
   {
+    "<leader>rD",
+    vim.lsp.buf.type_definition,
+    desc = "Go to type definition",
+  },
+  {
     "<leader>rr",
     "<cmd>FzfLua lsp_references<CR>",
     desc = "Show references",
