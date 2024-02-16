@@ -150,7 +150,7 @@ return {
               db_name = "project"
               host = "postgres"
             else
-              host = string.format("%s-proxy.rebotics.net", db_name)
+              host = string.format("%s-maint.rebotics.net", db_name)
             end
 
             return string.format(
@@ -179,7 +179,29 @@ return {
       "DiffviewFileHistory",
     }
   },
-
+  -- Search in Git history
+  {
+    "aaronhallaert/advanced-git-search.nvim",
+    keys = {
+      {
+        "<leader>gf",
+        "<cmd>:AdvancedGitSearch<CR>",
+        desc = "Search in Git"
+      }
+    },
+    cmd = {
+      "AdvancedGitSearch",
+    },
+    config = function()
+      require("advanced_git_search.fzf").setup{
+      -- Insert Config here
+      }
+    end,
+    dependencies = {
+      "tpope/vim-fugitive",
+      "ibhagwan/fzf-lua",
+    }
+  },
   -- NeoGit just to try it out
   {
     "NeogitOrg/neogit",

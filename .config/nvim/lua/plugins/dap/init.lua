@@ -7,8 +7,8 @@ return {
       "rcarriga/nvim-dap-ui",
       -- stylua: ignore
       keys = {
-        { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-        { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
+        { "<leader>du", function() require("dapui").toggle({}) end,  desc = "Dap UI" },
+        { "<leader>de", function() require("dapui").eval() end,      desc = "Eval",  mode = { "n", "v" } },
       },
       opts = {},
       config = function(_, opts)
@@ -60,24 +60,24 @@ return {
   -- stylua: ignore
   keys = {
     { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
-    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-    { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
-    { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
-    { "<leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
-    { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
-    { "<leader>dj", function() require("dap").down() end, desc = "Down" },
-    { "<leader>dk", function() require("dap").up() end, desc = "Up" },
-    { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
-    { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
-    { "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
-    { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
-    { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-    { "<leader>ds", function() require("dap").session() end, desc = "Session" },
-    { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-    { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+    { "<leader>db", function() require("dap").toggle_breakpoint() end,                                    desc = "Toggle Breakpoint" },
+    { "<leader>dc", function() require("dap").continue() end,                                             desc = "Continue" },
+    { "<leader>dC", function() require("dap").run_to_cursor() end,                                        desc = "Run to Cursor" },
+    { "<leader>dg", function() require("dap").goto_() end,                                                desc = "Go to line (no execute)" },
+    { "<leader>di", function() require("dap").step_into() end,                                            desc = "Step Into" },
+    { "<leader>dj", function() require("dap").down() end,                                                 desc = "Down" },
+    { "<leader>dk", function() require("dap").up() end,                                                   desc = "Up" },
+    { "<leader>dl", function() require("dap").run_last() end,                                             desc = "Run Last" },
+    { "<leader>do", function() require("dap").step_out() end,                                             desc = "Step Out" },
+    { "<leader>dO", function() require("dap").step_over() end,                                            desc = "Step Over" },
+    { "<leader>dp", function() require("dap").pause() end,                                                desc = "Pause" },
+    { "<leader>dr", function() require("dap").repl.toggle() end,                                          desc = "Toggle REPL" },
+    { "<leader>ds", function() require("dap").session() end,                                              desc = "Session" },
+    { "<leader>dt", function() require("dap").terminate() end,                                            desc = "Terminate" },
+    { "<leader>dw", function() require("dap.ui.widgets").hover() end,                                     desc = "Widgets" },
   },
 
-  config = function (_, _)
+  config = function(_, _)
     local dap = require("dap")
 
     -- General Python Configuration
@@ -99,6 +99,22 @@ return {
               remoteRoot = "/app"
             }
           }
+        },
+        {
+          type = 'python',
+          request = 'launch',
+          name = "Launch a file",
+          program = "${file}", -- This configuration will launch the current file if used.
+          pythonPath = function()
+            local cwd = vim.fn.getcwd()
+            if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+              return cwd .. '/venv/bin/python'
+            elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+              return cwd .. '/.venv/bin/python'
+            else
+              return '/usr/bin/python'
+            end
+          end,
         }
       },
     }
@@ -121,7 +137,7 @@ return {
       else
         cb({
           type = 'executable',
-          command = 'python -m debugpy',
+          command = 'python',
           args = { '-m', 'debugpy.adapter' },
           options = {
             source_filetype = 'python',

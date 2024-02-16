@@ -16,6 +16,16 @@ local lsp_keymapping = {
   },
   {
     "<leader>rD",
+    function()
+      require("fzf-lua").lsp_declarations({
+        jump_to_single_result = true,
+        ignore_current_line = true,
+      })
+    end,
+    desc = "Go to declaration",
+  },
+  {
+    "<leader>rt",
     vim.lsp.buf.type_definition,
     desc = "Go to type definition",
   },

@@ -110,6 +110,36 @@ return {
         mappings = {
           ["<space>"] = "none",
           ["W"] = "open_with_window_picker",
+          ["O"] = {
+            function(state)
+              local node = state.tree:get_node()
+              local filepath = node.path
+              local osType = os.getenv("OS")
+
+              local command
+
+              if osType == "Windows_NT" then
+                command = "start " .. filepath
+              elseif osType == "Darwin" then
+                command = "open " .. filepath
+              else
+                local handle = io.popen("which handlr")
+                assert(handle)
+
+                local result = handle:read("*a")
+                handle:close()
+
+                if not string.find(result, "not found") then
+                  command = "handlr open " .. filepath
+                else
+                  command = "xdg-open " .. filepath
+                end
+              end
+
+              vim.notify("Openning a file..")
+              os.execute(command)
+            end
+          }
         },
       },
       default_component_configs = {
