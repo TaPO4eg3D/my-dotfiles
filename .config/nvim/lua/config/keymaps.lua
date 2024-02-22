@@ -1,3 +1,6 @@
+local M = {}
+
+
 local function map(mode, lhs, rhs, opts)
   local keys = require("lazy.core.handler").handlers.keys
 
@@ -40,6 +43,7 @@ map("n", "<leader>tc", "<cmd>:tabclose<cr>", { desc = "Close the tab" })
 
 -- Documenting available keymappings and groups
 local wk = require('which-key')
+
 wk.register({
   ["<leader>"] = {
     f = {
@@ -56,3 +60,81 @@ wk.register({
     }
   }
 })
+
+-- Rust Specific Keybindings
+function M.setup_rust_keybindings()
+  local wk = require('which-key')
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  wk.register({
+    ["<leader>"] = {
+      r = {
+        h = {
+          name = "Rust Tools"
+        }
+      }
+    }
+  })
+
+  vim.keymap.set(
+      "n", "<leader>ra",
+      function()
+        vim.cmd.RustLsp('codeAction')
+      end,
+      {
+        silent = true,
+        buffer = bufnr,
+        desc = "Code actions"
+      }
+  )
+
+  vim.keymap.set(
+      "n", "<leader>rhr",
+      function()
+        vim.cmd.RustLsp('runnables')
+      end,
+      {
+        silent = true,
+        buffer = bufnr,
+        desc = "Show Rust Runnables and run selected"
+      }
+  )
+
+  vim.keymap.set(
+      "n", "<leader>rhp",
+      function()
+        vim.cmd.RustLsp('rebuildProcMacros')
+      end,
+      {
+        silent = true,
+        buffer = bufnr,
+        desc = "Rebuild proc macros"
+      }
+  )
+
+  vim.keymap.set(
+      "n", "<leader>rhe",
+      function()
+        vim.cmd.RustLsp('expandMacro')
+      end,
+      {
+        silent = true,
+        buffer = bufnr,
+        desc = "Recursively expand macro"
+      }
+  )
+
+  vim.keymap.set(
+    "n", "<leader>dd",
+    function()
+      vim.cmd.RustLsp('debuggables')
+    end,
+    {
+      silent = true,
+      buffer = bufnr,
+      desc = "Get debuggables of rust-analyzer"
+    }
+  )
+end
+
+return M

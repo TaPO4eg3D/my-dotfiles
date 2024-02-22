@@ -150,7 +150,14 @@ return {
         setup(server)
       end
 
-      utils.on_attach(set_keymaps)
+      utils.on_attach(function (client, buffer)
+        set_keymaps(client, buffer)
+
+        -- Enable Inlay Hints when they are supported
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(buffer, true)
+        end
+      end)
     end
   },
 
@@ -174,33 +181,9 @@ return {
 
   -- Rust tooling
   {
-    "simrat39/rust-tools.nvim",
-    ft = { "rust" },
-    opts = function()
-      local pkg_path = vim.fn.stdpath("data") .. "/mason/packages"
-      local ext_path = pkg_path .. "/codelldb/extension"
-
-      local codelldb_path = ext_path .. "/adapter/codelldb"
-      local liblldb_path = ext_path .. "/lldb/lib/liblldb.so"
-
-      return {
-        dap = {
-          adapter = {
-            type = "server",
-            port = "${port}",
-            host = "127.0.0.1",
-            executable = {
-              command = codelldb_path,
-              args = { "--liblldb", liblldb_path, "--port", "${port}" },
-            },
-          }
-        }
-      }
-    end,
-    dependencies = {
-      "plenary.nvim",
-      "nvim-lspconfig",
-    },
+    'mrcjkb/rustaceanvim',
+    version = '^4',
+    ft = { 'rust' },
   },
 
   -- LSP and DAP manager
