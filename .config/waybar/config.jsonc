@@ -76,7 +76,8 @@
   "custom/updates": {
     "exec": "(paru -Qua) | wc -l",
     "interval": 7200,
-    "format": "󰚰 {}"
+    "format": "󰚰 {}",
+    "on-click": "kitty -e paru -Syyu"
   },
   // "custom/language": {
   //   "exec": "cat /tmp/kb_layout",

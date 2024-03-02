@@ -45,6 +45,11 @@ local lsp_keymapping = {
     desc = "Code Actions",
   },
   {
+    "<leader>rf",
+    vim.lsp.buf.format,
+    desc = "Format Buffer",
+  },
+  {
     "K",
     vim.lsp.buf.hover,
     desc = "Hover",
@@ -53,6 +58,13 @@ local lsp_keymapping = {
     "<leader>rK",
     vim.lsp.buf.signature_help,
     desc = "Signature Help",
+  },
+  {
+    "<leader>ri",
+    function ()
+      vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+    end,
+    desc = "Toggle inlay hints",
   },
 }
 
@@ -111,7 +123,7 @@ return {
         pyright = {},
         volar = {},
         docker_compose_language_service = {
-          filetypes = {"yaml"}
+          filetypes = { "yaml" }
         }
       },
     },
@@ -150,7 +162,7 @@ return {
         setup(server)
       end
 
-      utils.on_attach(function (client, buffer)
+      utils.on_attach(function(client, buffer)
         set_keymaps(client, buffer)
 
         -- Enable Inlay Hints when they are supported
@@ -161,14 +173,14 @@ return {
     end
   },
 
-  -- Formatters
-  -- TODO: Delete it? It's archived now
+  -- LSP Server embedden in NeoVim
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
     opts = function()
       local nls = require("null-ls")
+
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
@@ -184,6 +196,70 @@ return {
     'mrcjkb/rustaceanvim',
     version = '^4',
     ft = { 'rust' },
+  },
+  -- Managing Crates in Rust
+  {
+    'saecki/crates.nvim',
+    event = { "BufRead Cargo.toml" },
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+      "nvimtools/none-ls.nvim",
+    },
+    config = function()
+      local crates = require('crates')
+      crates.setup({
+        null_ls = {
+          enabled = true,
+          name = "crates.nvim",
+        },
+      })
+
+      local opts = {
+        silent = true,
+      }
+
+      --- Merge opts with keymap description
+      ---@param desc string
+      ---@return table
+      local function d(desc)
+        ---@type table<string, (string | boolean)>
+        local result = {
+          desc = desc,
+        }
+        for k, v in pairs(opts) do result[k] = v end
+
+        return result
+      end
+
+      vim.api.nvim_create_autocmd("BufRead", {
+        group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+        pattern = "Cargo.toml",
+        callback = function(args)
+          opts.buffer = args.buf
+
+          vim.keymap.set("n", "<leader>cv", crates.show_versions_popup, d("Display version popup"))
+          vim.keymap.set("n", "<leader>cf", crates.show_features_popup, d("Display features popup"))
+          vim.keymap.set("n", "<leader>cd", crates.show_dependencies_popup, d("Display dependencies popup"))
+
+          vim.keymap.set("n", "<leader>cu", crates.update_crate, d("Update crate under the cursor"))
+          vim.keymap.set("v", "<leader>cu", crates.update_crates, d("Update selected crates"))
+          vim.keymap.set("n", "<leader>ca", crates.update_all_crates, d("Update all crates"))
+          vim.keymap.set("n", "<leader>cU", crates.upgrade_crate, d("Upgrade crate under the cursor"))
+          vim.keymap.set("v", "<leader>cU", crates.upgrade_crates, d("Upgrade selected crates"))
+          vim.keymap.set("n", "<leader>cA", crates.upgrade_all_crates, d("Upgrade all crates"))
+
+          vim.keymap.set("n", "<leader>cx", crates.expand_plain_crate_to_inline_table, d("Expand inline crate to table"))
+          vim.keymap.set("n", "<leader>cX", crates.extract_crate_into_table, d("Extract crate into a table"))
+
+          vim.keymap.set("n", "<leader>cH", crates.open_homepage, d("Open crate's homepage"))
+          vim.keymap.set("n", "<leader>cR", crates.open_repository, d("Open crate's repository"))
+          vim.keymap.set("n", "<leader>cD", crates.open_documentation, d("Open crate's documentation"))
+          vim.keymap.set("n", "<leader>cC", crates.open_crates_io, d("Open crate.io"))
+
+          require("cmp").setup.buffer({ sources = { { name = "crates" } } })
+        end,
+      })
+    end,
   },
 
   -- LSP and DAP manager

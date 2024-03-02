@@ -130,3 +130,6 @@ export PATH=$PATH:/home/tapo4eg3d/.spicetify
 
 # Utils for cross compilation of MacOS
 export PATH=$PATH:/usr/local/osx-ndk-x86/bin
+
+# CD command improvement
+eval "$(zoxide init --cmd cd zsh)"
