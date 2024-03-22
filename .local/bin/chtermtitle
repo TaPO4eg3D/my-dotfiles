@@ -1,21 +1,4 @@
 #!/bin/bash
 
-notify-send "Searching for the socket..."
-
-PID=$(hyprctl activewindow | awk '/pid:/ {print $2}' | tail -n 1)
-SOCK=$(lsof -u tapo4eg3d | grep $PID | grep sock | awk '{print $9}')
-
-if [[ -z $SOCK ]]
-then
-    notify-send "Can't find the socket"
-    exit 1
-fi
-
-NEW_NAME=$(yad --title="Enter Terminal Name" --entry --fixed)
-
-if ! [[ -z $NEW_NAME ]]
-then
-    MSG="{\"Config\":{\"options\":[\"window.title=$NEW_NAME\",\"window.dynamic_title=false\"],\"window_id\":-1,\"reset\":false}}"
-    
-    echo $MSG | netcat -U $SOCK
-fi
+T=`yad --title="Enter Terminal Name" --entry --fixed`
+kitten @ set-window-title $T

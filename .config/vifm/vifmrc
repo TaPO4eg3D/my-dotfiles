@@ -11,7 +11,7 @@
 " If you would like to use another vi clone such as Elvis or Vile
 " you will need to change this setting.
 
-set vicmd=vim
+set vicmd=nvim
 " set vicmd=elvis\ -G\ termcap
 " set vicmd=vile
 
@@ -111,13 +111,6 @@ endif
 " Set custom status line look
 
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
-
-" ------------------------------------------------------------------------------
-
-" :mark mark /full/directory/path [filename]
-
-mark b ~/bin/
-mark h ~/
 
 " ------------------------------------------------------------------------------
 
@@ -232,7 +225,7 @@ fileviewer *.[1-8] man ./%c | col -b
 " Images
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in sxiv}
-        \ sxiv %f,
+        \ nsxiv %f,
         \ {View in gpicview}
         \ gpicview %c,
         \ {View in shotwell}
@@ -276,8 +269,7 @@ filetype *.asc
        \ !!gpg --verify %c,
 
 " Torrent
-filetype *.torrent ktorrent %f &
-fileviewer *.torrent dumptorrent -v %c
+filetype *.torrent qbittorrent %f &
 
 " FuseZipMount
 filetype *.zip,*.jar,*.war,*.ear,*.oxt,*.apkg
@@ -444,7 +436,7 @@ nnoremap cc cw<c-u>
 nnoremap A cw
 
 " Open console in current directory
-nnoremap ,t :!xterm &<cr>
+nnoremap ,t :!kitty &<cr>
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap ,c :write | edit $MYVIFMRC | restart<cr>
@@ -501,10 +493,6 @@ command link ln -s %d/%f %D
 set timefmt='%Y-%m-%d %H:%M'
 set viewcolumns=-80%{name},10%{ext},10%{mtime}
 
-" Support of drag and drop
-command! dragon dragon-drop -a -x %f
-nmap <C-f> :dragon<CR>
-
 " Support archive extracting
 command! extractfiles :execute '!%%n extract-files' &fusehome expand('%%D') expand('%%f:p')
 
@@ -560,3 +548,51 @@ fileviewer <font/*>
     \ vifmimg font %px %py %pw %ph %c
     \ %pc
     \ vifmimg clear
+
+
+" Bookmarks
+bmark! ~/Downloads Downloads
+bmark! ~/storage/Games/steamapps SteamGamesNVME2
+
+" Write the current bookmarks to a file (same as EvilDroidMax)
+command! fzfreadbmarks :exe "normal! :bmarks\r:write ~/.config/vifm/fzf-read/bookmarks\rq"
+
+" Fzf through bookmarks
+if $TMUX
+    " Use popup window. Requires tmux 3.2 and up
+    command! fzfbmarks :execute 'cd "'.system('cat ~/.config/vifm/fzf-read/bookmarks | fzf-tmux -p 90,30 | sed "s/:.*//" ').'"'
+    command! fdcddir :execute 'cd "'.system('fd -HE ''.git'' -t d . | fzf-tmux -p 90,30').'"'
+    command! fdeditfiles :execute 'edit "'.system('fd -HE ''.git'' -t f . | fzf-tmux -p 90,30').'"'
+    command! FZFfind : set noquickview
+                \| let $FZF_PICK = term('find | fzf-tmux -p 80%% 2>/dev/tty')
+                \| if $FZF_PICK != ''
+                \|     execute 'goto' fnameescape($FZF_PICK)
+                \| endif
+else
+    " Use full-screen. Works even without tmux
+    command! fzfbmarks :execute 'cd "'.term('cat ~/.config/vifm/fzf-read/bookmarks | fzf 2>/dev/tty | sed "s/:.*//" ').'"'
+    command! fdcddir :execute 'cd "'.term('fd -HE ''.git'' -t d . | fzf 2>/dev/tty').'"'
+    command! fdeditfiles :execute 'edit "'.term('fd -HE ''.git'' -t f . | fzf 2>/dev/tty').'"'
+    command! FZFfind : set noquickview
+                \| let $FZF_PICK = term('find | fzf 2>/dev/tty')
+                \| if $FZF_PICK != ''
+                \|     execute 'goto' fnameescape($FZF_PICK)
+                \| endif
+endif
+
+" To use space as leader
+nmap <space> <nop>
+
+  " Read in latests bookmarks before fzfinding through them
+command! fzfmarks :fzfreadbmarks | fzfbmarks
+
+  " fzfind bookmarks
+nnoremap <space>b :fzfmarks<cr>
+  " cd to child directory
+nnoremap <space>g :fdcddir<cr>
+  " edit file from child directory in vim
+nnoremap <space>f :FZFfind<cr>
+
+" Support of drag and drop
+command! dragon dragon-drop -a -x %f
+nmap <C-c> :dragon<CR>

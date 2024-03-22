@@ -43,10 +43,9 @@
   "hyprland/workspaces": {
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
-    "all-outputs": true,
-    "persistent-workspaces": {
-        "*": 9
-    },
+    // "persistent-workspaces": {
+    //     "*": 9
+    // },
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
@@ -58,7 +57,16 @@
       "6": "6",
       "7": "7",
       "8": "8",
-      "9": "9"
+      "9": "9",
+      "11": "1",
+      "12": "2",
+      "13": "3",
+      "14": "4",
+      "15": "5",
+      "16": "6",
+      "17": "7",
+      "18": "8",
+      "19": "9"
     }
   },
   "cpu": {
@@ -97,7 +105,7 @@
     "spacing": 10
   },
   "clock": {
-    "format": "{: %R   %d/%m}",
+    "format": "{:%R | %d/%m}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "on-click": "yad --calendar --fixed"
   },

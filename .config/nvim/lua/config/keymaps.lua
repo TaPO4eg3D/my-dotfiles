@@ -16,11 +16,11 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
--- Window navigation
-map("n", "<A-h>", "<C-w>h")
-map("n", "<A-j>", "<C-w>j")
-map("n", "<A-l>", "<C-w>l")
-map("n", "<A-k>", "<C-w>k")
+-- Window navigation (Defined by vim-tmux-navigator)
+-- map("n", "<A-h>", "<C-w>h")
+-- map("n", "<A-j>", "<C-w>j")
+-- map("n", "<A-l>", "<C-w>l")
+-- map("n", "<A-k>", "<C-w>k")
 
 -- Resize window using <ctrl-direction>
 map("n", "<C-k>", "<cmd>resize +2<cr>")

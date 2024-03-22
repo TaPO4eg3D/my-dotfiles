@@ -156,9 +156,13 @@ return {
         table.insert(server_keys, server)
       end
 
-      installed_servers = vim.tbl_extend("force", installed_servers, server_keys)
-
       for _, server in ipairs(installed_servers) do
+        if not vim.list_contains(server_keys) then
+          table.insert(server_keys, server)
+        end
+      end
+
+      for _, server in ipairs(server_keys) do
         setup(server)
       end
 
