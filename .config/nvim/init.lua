@@ -1,12 +1,12 @@
 -- TODO: Need to remove when fixed
 -- https://github.com/neovim/neovim/issues/23291
--- local ok, wf = pcall(require, "vim.lsp._watchfiles")
--- if ok then
---    -- disable lsp watcher. Too slow on linux
---    wf._watchfunc = function()
---      return function() end
---    end
--- end
+local ok, wf = pcall(require, "vim.lsp._watchfiles")
+if ok then
+   -- disable lsp watcher. Too slow on linux
+   wf._watchfunc = function()
+     return function() end
+   end
+end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

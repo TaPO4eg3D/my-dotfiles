@@ -50,6 +50,7 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
+    version = "3.15",
     dependencies = {
       "MunifTanjim/nui.nvim",
       {
