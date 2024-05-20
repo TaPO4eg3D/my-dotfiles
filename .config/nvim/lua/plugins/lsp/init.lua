@@ -62,7 +62,7 @@ local lsp_keymapping = {
   {
     "<leader>ri",
     function ()
-      vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(0))
     end,
     desc = "Toggle inlay hints",
   },
@@ -171,7 +171,7 @@ return {
 
         -- Enable Inlay Hints when they are supported
         if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(buffer, true)
+          vim.lsp.inlay_hint.enable(true)
         end
       end)
     end
