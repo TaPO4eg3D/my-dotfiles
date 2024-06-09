@@ -6,6 +6,8 @@ return {
     version = false,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
+      -- For my custom UI
+      "MunifTanjim/nui.nvim",
     },
     opts = {
       winopts = {
@@ -32,6 +34,53 @@ return {
         "<leader>fi",
         "<cmd>FzfLua live_grep<cr>",
         desc = "Live Grep",
+      },
+      {
+        "<leader>foi",
+        function()
+          local fzf = require('fzf-lua')
+
+          local Input = require("nui.input")
+          local event = require("nui.utils.autocmd").event
+
+          local input = Input({
+            position = "50%",
+            size = {
+              width = 50,
+            },
+            border = {
+              style = "single",
+              text = {
+                top = "Ripgrep options",
+                top_align = "center",
+              },
+            },
+            win_options = {
+              winhighlight = "Normal:Normal,FloatBorder:Normal",
+            },
+          }, {
+            prompt = "> ",
+            default_value = "",
+            on_close = function()
+              print("Search canceled")
+            end,
+            on_submit = function(value)
+              fzf.live_grep({
+                rg_opts = value
+              })
+            end,
+          })
+
+          -- mount/open the component
+          input:mount()
+
+          -- unmount component when cursor leaves buffer
+          input:on(event.BufLeave, function()
+            input:unmount()
+          end)
+
+        end,
+        desc = "Ripgrep with custom options to RG"
       },
       {
         "<leader>o",
@@ -174,5 +223,14 @@ return {
     config = function ()
       vim.g.tmux_navigator_no_mappings = 1
     end
-  }
+  },
+
+  -- Time tracking
+  {
+    "ActivityWatch/aw-watcher-vim",
+    cmd = {
+      'AWStart',
+      'AWStatus',
+    },
+  },
 }
