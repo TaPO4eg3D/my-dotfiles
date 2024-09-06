@@ -22,6 +22,17 @@ end
 -- map("n", "<A-l>", "<C-w>l")
 -- map("n", "<A-k>", "<C-w>k")
 
+-- Russian keyboard
+-- vim.o.keymap = "russian-jcukenwin"
+
+-- map("n", "<C-i>", function()
+--   local v = (vim.o.iminsert + 1) % 2
+--
+--   vim.o.iminsert = v
+--   vim.o.imsearch = v
+-- end)
+-- map("i", "<C-i>", '<C-^>')
+
 -- Resize window using <ctrl-direction>
 map("n", "<C-k>", "<cmd>resize +2<cr>")
 map("n", "<C-j>", "<cmd>resize -2<cr>")
