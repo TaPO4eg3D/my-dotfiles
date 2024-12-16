@@ -62,7 +62,7 @@ local lsp_keymapping = {
   {
     "<leader>ri",
     function ()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(0))
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end,
     desc = "Toggle inlay hints",
   },
@@ -96,7 +96,7 @@ return {
       -- Extension of LSP capabitlites
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-nvim-lsp",
     },
     opts = {
       servers = {
@@ -128,7 +128,6 @@ return {
       },
     },
     config = function(_, opts)
-      local cmp = require("cmp_nvim_lsp")
       local utils = require("utils")
       local mason_lsp = require("mason-lspconfig")
       local servers = opts.servers
@@ -137,7 +136,7 @@ return {
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        cmp.default_capabilities(),
+        require('blink.cmp').get_lsp_capabilities(),
         opts.capabilities or {}
       )
 
@@ -169,9 +168,9 @@ return {
       utils.on_attach(function(client, buffer)
         set_keymaps(client, buffer)
 
-        -- Enable Inlay Hints when they are supported
+        -- Disable Inlay Hints when they are supported
         if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(true)
+          vim.lsp.inlay_hint.enable(false)
         end
       end)
     end
@@ -206,7 +205,7 @@ return {
     'saecki/crates.nvim',
     event = { "BufRead Cargo.toml" },
     dependencies = {
-      "hrsh7th/nvim-cmp",
+      -- "hrsh7th/nvim-cmp",
       "nvimtools/none-ls.nvim",
     },
     config = function()

@@ -24,3 +24,11 @@ opt.splitright = true -- Put new windows right of current
 opt.swapfile = false
 opt.backup = false
 -- opt.wrap = false -- Disable line wrap
+
+-- Folding
+vim.o.foldmethod = "expr"
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+-- INFO: queries/rust/folds.scm
+-- vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"

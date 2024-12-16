@@ -7,6 +7,11 @@ return {
     lazy = true,
     opts = { style = "moon" },
   },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000
+  },
 
   -- Icons
   {
@@ -134,6 +139,9 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
+    opts = {
+      notify = false,
+    },
     config = function(_, opts)
       vim.o.timeout = true
       vim.o.timeoutlen = 500
