@@ -112,14 +112,14 @@ export $(cat $HOME/.secure_envs | xargs)
 
 export TERM=xterm-256color
 export MANPAGER='nvim +Man!'
-export _JAVA_AWT_WM_NONREPARENTING=1 # Fix broken Java apps on DWM
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true' # Fix fonts in Java appliactions
 
+alias ls="eza -lh --icons=always --git"
 alias vim="nvim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias steamguard='mono /usr/local/bin/steamguard'
 alias vimdiff='nvim -d'
 alias dragon-drop11='GDK_BACKEND=x11 dragon-drop'
+alias gamescope-steam="gamescope -w 1920 -h 1080 --adaptive-sync --backend sdl --steam -- steam -bigpicture"
 
 gch() {
  git checkout `$(git branch --all | fzf | tr -d '[:space:]')`
@@ -127,9 +127,22 @@ gch() {
 
 # Spotify Utility
 export PATH=$PATH:/home/tapo4eg3d/.spicetify
+export PATH=$PATH:/home/tapo4eg3d/.cargo/bin
 
 # Utils for cross compilation of MacOS
 export PATH=$PATH:/usr/local/osx-ndk-x86/bin
 
+export UID=$(id -u)
+export GROUPS=$(id -g)
+
 # CD command improvement
 eval "$(zoxide init --cmd cd zsh)"
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/tapo4eg3d/.opam/opam-init/init.zsh' ]] || source '/home/tapo4eg3d/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
