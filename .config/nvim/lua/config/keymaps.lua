@@ -17,10 +17,10 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- Window navigation (Defined by vim-tmux-navigator)
--- map("n", "<A-h>", "<C-w>h")
--- map("n", "<A-j>", "<C-w>j")
--- map("n", "<A-l>", "<C-w>l")
--- map("n", "<A-k>", "<C-w>k")
+map("n", "<A-h>", "<C-w>h")
+map("n", "<A-j>", "<C-w>j")
+map("n", "<A-l>", "<C-w>l")
+map("n", "<A-k>", "<C-w>k")
 
 -- Russian keyboard
 -- vim.o.keymap = "russian-jcukenwin"
@@ -34,10 +34,10 @@ end
 -- map("i", "<C-i>", '<C-^>')
 
 -- Resize window using <ctrl-direction>
-map("n", "<C-k>", "<cmd>resize +2<cr>")
-map("n", "<C-j>", "<cmd>resize -2<cr>")
-map("n", "<C-h>", "<cmd>vertical resize -2<cr>")
-map("n", "<C-l>", "<cmd>vertical resize +2<cr>")
+-- map("n", "<C-k>", "<cmd>resize +2<cr>")
+-- map("n", "<C-j>", "<cmd>resize -2<cr>")
+-- map("n", "<C-h>", "<cmd>vertical resize -2<cr>")
+-- map("n", "<C-l>", "<cmd>vertical resize +2<cr>")
 
 -- Cycle buffers
 map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
@@ -51,6 +51,15 @@ map("n", "<leader>tn", "<cmd>:tabnew<cr>", { desc = "New tab" })
 map("n", "<leader>th", "<cmd>:tabprevious<cr>", { desc = "Previous tab" })
 map("n", "<leader>tl", "<cmd>:tabnext<cr>", { desc = "Next tab" })
 map("n", "<leader>tc", "<cmd>:tabclose<cr>", { desc = "Close the tab" })
+
+map("n", "<leader>cf", function()
+  local file_path = vim.api.nvim_buf_get_name(0)
+  vim.fn.setreg('+', file_path)
+
+  vim.notify("File path copied to clipboard: " .. file_path, vim.log.levels.INFO)
+end, {
+  desc = "Copy the full file path to clipboard"
+})
 
 -- Documenting available keymappings and groups
 local wk = require('which-key')

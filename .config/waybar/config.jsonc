@@ -8,6 +8,7 @@
   "height": 0,
   "modules-left": [
     "hyprland/workspaces",
+    //"wlr/workspaces",
     "hyprland/window"
   ],
   "modules-center": [],
@@ -41,6 +42,11 @@
     "format-icons": ["", "", "", "", ""],
     "max-length": 25
   },
+  //"wlr/workspaces": {
+  //    "format": "{icon}",
+  //    "on-click": "activate",
+  //    "sort-by-number": true
+  //  },
   "hyprland/workspaces": {
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",

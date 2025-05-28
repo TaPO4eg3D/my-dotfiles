@@ -4,7 +4,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = (not jit.os:find("Windows"))
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
+        or nil,
     dependencies = {
       -- Set of already predefined snippets for buch of langs and framworks
       "rafamadriz/friendly-snippets",
@@ -30,21 +30,41 @@ return {
     },
   },
   -- auto completion
+  -- add blink.compat
+  {
+    'saghen/blink.compat',
+    version = '*',
+    lazy = true,
+    opts = {},
+  },
   {
     'saghen/blink.cmp',
     lazy = false, -- lazy loading handled internally
-    version = 'v0.7',
+    version = 'v1.*',
+    dependencies = {
+      'Kaiser-Yang/blink-cmp-avante',
+    },
 
     opts = {
+      sources = {
+        default = { 'avante', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+          }
+        },
+      },
       keymap = {
         preset = 'enter',
       },
       appearance = {
         nerd_font_variant = 'mono'
       },
-
-      sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      completion = {
+        trigger = {
+          show_on_insert_on_trigger_character = false
+        }
       },
     },
     opts_extend = { "sources.default" },
@@ -198,8 +218,8 @@ return {
       "AdvancedGitSearch",
     },
     config = function()
-      require("advanced_git_search.fzf").setup{
-      -- Insert Config here
+      require("advanced_git_search.fzf").setup {
+        -- Insert Config here
       }
     end,
     dependencies = {

@@ -120,6 +120,8 @@ alias steamguard='mono /usr/local/bin/steamguard'
 alias vimdiff='nvim -d'
 alias dragon-drop11='GDK_BACKEND=x11 dragon-drop'
 alias gamescope-steam="gamescope -w 1920 -h 1080 --adaptive-sync --backend sdl --steam -- steam -bigpicture"
+alias aider4o="aider --model gpt-4o --api-key openai=$OPENAI_TOKEN"
+alias restic-ya="restic -r rclone:Yandex:Backups"
 
 gch() {
  git checkout `$(git branch --all | fzf | tr -d '[:space:]')`
@@ -146,3 +148,13 @@ eval "$(zoxide init --cmd cd zsh)"
 # This section can be safely removed at any time if needed.
 [[ ! -r '/home/tapo4eg3d/.opam/opam-init/init.zsh' ]] || source '/home/tapo4eg3d/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
+
+# Open Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}

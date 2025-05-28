@@ -8,7 +8,6 @@ local lsp_keymapping = {
     "<leader>rd",
     function()
       require("fzf-lua").lsp_definitions({
-        jump_to_single_result = true,
         ignore_current_line = true,
       })
     end,
@@ -211,9 +210,11 @@ return {
     config = function()
       local crates = require('crates')
       crates.setup({
-        null_ls = {
-          enabled = true,
-          name = "crates.nvim",
+        lsp = {
+            enabled = true,
+            actions = true,
+            completion = true,
+            hover = true,
         },
       })
 
@@ -258,8 +259,6 @@ return {
           vim.keymap.set("n", "<leader>cR", crates.open_repository, d("Open crate's repository"))
           vim.keymap.set("n", "<leader>cD", crates.open_documentation, d("Open crate's documentation"))
           vim.keymap.set("n", "<leader>cC", crates.open_crates_io, d("Open crate.io"))
-
-          require("cmp").setup.buffer({ sources = { { name = "crates" } } })
         end,
       })
     end,

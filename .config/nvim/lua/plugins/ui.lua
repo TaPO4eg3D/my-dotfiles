@@ -5,7 +5,14 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = true,
-    opts = { style = "moon" },
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+      style = "moon",
+    },
   },
   {
     "catppuccin/nvim",
@@ -42,34 +49,11 @@ return {
         return math.floor(vim.o.columns * 0.75)
       end,
     },
-    config = function(_, opts)
-      vim.notify = require("notify")
-      vim.notify.setup(opts)
+    config = function (opts)
+      local notify = require('notify')
+      notify.setup(opts)
 
-      -- TODO: Move to utils
-      local highlights = vim.fn.getcompletion("", "highlight")
-      local patters = {
-        "Notify%w*Title",
-        "Notify%w*Body",
-        "Notify%w*Border",
-      }
-
-      local extra_groups = {}
-
-      for _, highlight in ipairs(highlights) do
-        for _, pattern in ipairs(patters) do
-          local match = string.match(highlight, pattern)
-
-          if match ~= nil then
-            extra_groups[#extra_groups + 1] = highlight
-            break
-          end
-        end
-      end
-
-      vim.g.transparent_groups = vim.list_extend(
-        vim.g.transparent_groups or {}, extra_groups
-      )
+      vim.notify = notify
     end
   },
 
@@ -84,18 +68,12 @@ return {
         "NeoTreeNormalNC",
       },
     },
+    lazy = false,
     config = function(_, opts)
       require("transparent").setup(opts)
 
       vim.cmd [[TransparentEnable]]
     end
-  },
-
-  -- bufferline
-  {
-    "akinsho/bufferline.nvim",
-    event = "VeryLazy",
-    opts = {},
   },
 
   -- Improved vim.ui functions
