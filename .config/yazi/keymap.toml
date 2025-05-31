@@ -1,0 +1,20 @@
+[[manager.append_keymap]]
+on  = ["c", "s"]
+run = "plugin steam"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"
+
+[[manager.prepend_keymap]]
+on   = [ "g", "s" ]
+run  = "cd ~/storage/Wolf/common/Steam/Games/"
+desc = "Go to the Steam folder (storage)"
+
+[[manager.prepend_keymap]]
+on   = [ "<C-n>" ]
+run  = '''
+    shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
+'''
+desc = "Drag and Drop"
