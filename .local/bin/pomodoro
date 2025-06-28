@@ -1,0 +1,39 @@
+#!/bin/bash
+
+TTS_MODEL=/usr/share/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx
+
+declare -A pomo_options
+
+pomo_options["gaming"]="60"
+pomo_options["main-work"]="55"
+pomo_options["short-break"]="10"
+pomo_options["long-break"]="20"
+
+declare -A pomo_tts
+
+pomo_tts["gaming"]="Enough playing, it's time to do some stretching"
+pomo_tts["main-work"]="Good job on staying focused, take a rest now"
+pomo_tts["short-break"]="Small break is over, time to get focused!"
+pomo_tts["long-break"]="Long break is over, time to get focused!"
+
+tts() {
+    echo $1 | piper-tts --model $TTS_MODEL --output-raw | aplay -r 22050 -f S16_LE -t raw -
+}
+
+if [ -n "$1" -a -n "${pomo_options["$1"]}" ]; then
+    val=$1
+    notify-send -u critical "Started timer for \"$val\""
+
+    termdown ${pomo_options["$val"]}m
+    if [ $? -eq 0 ]; then
+        msg=${pomo_tts["$val"]}
+        notify-send --app-name "Pomodoro Timer" -u critical "$msg"
+
+        if [[ "$val" == *"break"* ]]; then
+            curl -H "Priority: urgent" -d "$msg" ntfy.sh/jfswqSKzwkcRWLPAnlnUzQHNxtttpXLJMevrfWKz
+        fi
+
+        tts "$msg"
+    fi
+fi
+

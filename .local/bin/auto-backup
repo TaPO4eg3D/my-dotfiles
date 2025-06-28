@@ -1,0 +1,236 @@
+#!/bin/python
+
+import time
+import typing
+
+import json
+import subprocess
+
+from collections.abc import Collection
+
+from datetime import datetime, timedelta
+
+from dataclasses import dataclass
+
+# == SETTINGS ==
+
+USB_PARTITION = 'sda1'
+MOUNT_PATH = '/home/tapo4eg3d/usb'
+
+POLL_TIME = timedelta(
+    minutes=30
+)
+BACKUP_TIME = (
+    '14:00',
+    '18:00',
+)
+
+RESTIC_REPOSITORY = f'{MOUNT_PATH}/Backups'
+
+BACKUP_PATHS = (
+    '/home/tapo4eg3d/Cloud',
+)
+
+# ==============
+
+@dataclass
+class MountManager:
+    parition: str
+    mount_path: str
+
+    def _get_lsblk_output(self) -> dict | None:
+        try:
+            result = subprocess.run(
+                ("lsblk", "-J",),
+                capture_output=True,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            print(f'Unable to execute lsblk: {e.stderr}')
+
+            return None
+
+        return json.loads(result.stdout)
+
+    def _mount(self) -> bool:
+        try:
+            _ = subprocess.run(
+                ('mount', f'/dev/{self.parition}', self.mount_path),
+                capture_output=True,
+                check=True,
+            )
+
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f'Failed to mount the device: {e.stderr}')
+
+        return False
+
+    def get_device_info(self) -> dict | None:
+        data = self._get_lsblk_output()
+
+        if data is None:
+            return None
+
+        for item in data['blockdevices']:
+            if 'children' not in item:
+                continue
+
+            for child in item['children']:
+                if USB_PARTITION == child['name']:
+                    return child
+
+        return None
+
+    def ensure_mounted(self) -> bool:
+        data = self.get_device_info()
+
+        if data is None:
+            print('Device is not found or failed to be queried!')
+
+            return False
+
+        if self.mount_path in data['mountpoints']:
+            return True
+
+        return self._mount()
+
+
+class SnapshotSummary(typing.TypedDict):
+    backup_start: str
+    backup_end: str
+
+
+class ResticSnapshotItem(typing.TypedDict):
+    time: str 
+    paths: list[str]
+
+    summary: SnapshotSummary
+
+
+class BackupController:
+    _poll_time: timedelta
+    _backup_time: Collection[str]
+    _backup_paths: Collection[str]
+
+    _last_backup: datetime | None
+
+    _mount_manager: MountManager
+
+    def __init__(
+        self,
+        backup_time: Collection[str],
+        poll_time: timedelta,
+        backup_paths: Collection[str],
+        mount_manager: MountManager,
+    ) -> None:
+        self._last_backup = None
+        self._poll_time = poll_time
+        self._backup_time = backup_time
+        self._backup_paths = backup_paths
+        self._mount_manager = mount_manager
+
+    def run(self):
+        while True:
+            self._run()
+
+            time.sleep(self._poll_time.seconds)
+
+    def _get_snapshots(self) -> list[ResticSnapshotItem] | None:
+        try:
+            result = subprocess.run(
+                (
+                    'restic', '-r',
+                    RESTIC_REPOSITORY,
+                    'snapshots',
+                    '--json'
+                ),
+                capture_output=True,
+                check=True,
+            )
+
+            return json.loads(result.stdout)
+        except subprocess.CalledProcessError as e:
+            print(f'Failed to get snapshots: {e.stderr}')
+
+        return None
+
+    def get_backup_time(self) -> list[datetime]:
+        result = []
+
+        tz = datetime.now().astimezone().tzinfo
+        now = datetime.now(tz=tz)
+
+        for item in self._backup_time:
+            hh, mm = item.split(':')
+
+            result.append(
+                now.replace(
+                    hour=int(hh),
+                    minute=int(mm),
+                )
+            )
+
+        return sorted(result)
+
+    def _backup(self):
+        for backup_path in self._backup_paths:
+            try:
+                _ = subprocess.run(
+                    (
+                        'restic', '-r',
+                        RESTIC_REPOSITORY,
+                        '--verbose',
+                        'backup',
+                        backup_path,
+                    ),
+                    check=True,
+                )
+
+                print(f'Backup of {backup_path} was done successfully')
+            except subprocess.CalledProcessError as e:
+                print(f'Error backup up {backup_path}: {e.stderr}')
+
+    def _run(self):
+        if not self._mount_manager.ensure_mounted():
+            return None
+
+        snapshots = self._get_snapshots()
+        if not snapshots:
+            return None
+
+        backup_time = self.get_backup_time()
+
+        tz = datetime.now().astimezone().tzinfo
+        now = datetime.now(tz=tz)
+
+        latest_backup = datetime.fromisoformat(
+            snapshots[-1]['summary']['backup_end']
+        )
+
+        should_backup = False
+
+        for item in backup_time:
+            if now >= item and latest_backup < item:
+                should_backup = True
+
+                break
+
+        if should_backup:
+            self._backup()
+        else:
+            print('No need to backup, skipping...')
+        
+        
+mount_manager = MountManager(
+    parition=USB_PARTITION,
+    mount_path=MOUNT_PATH,
+)
+
+controller = BackupController(
+    poll_time=POLL_TIME,
+    backup_time=BACKUP_TIME,
+    backup_paths=BACKUP_PATHS,
+    mount_manager=mount_manager,
+)
+controller.run()
