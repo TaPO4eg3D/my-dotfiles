@@ -12,6 +12,13 @@ from datetime import datetime, timedelta
 
 from dataclasses import dataclass
 
+"""
+TODO LIST:
+1. More sophisticated settings to backup multiple paths on different devices
+   with a separate backup tracking per each entry
+2. Clean up old backups automatically
+"""
+
 # == SETTINGS ==
 
 USB_PARTITION = 'sda1'
@@ -22,7 +29,7 @@ POLL_TIME = timedelta(
 )
 BACKUP_TIME = (
     '14:00',
-    '18:00',
+    '20:30',
 )
 
 RESTIC_REPOSITORY = f'{MOUNT_PATH}/Backups'
