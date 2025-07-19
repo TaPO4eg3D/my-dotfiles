@@ -63,7 +63,6 @@ return {
     opts = {
       extra_groups = {
         "NormalFloat",
-        "NotifyBackground",
         "NeoTreeNormal",
         "NeoTreeNormalNC",
       },

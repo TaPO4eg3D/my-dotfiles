@@ -127,9 +127,11 @@ gch() {
  git checkout `$(git branch --all | fzf | tr -d '[:space:]')`
 }
 
+export PATH=$PATH:$HOME/.local/bin
+
 # Spotify Utility
-export PATH=$PATH:/home/tapo4eg3d/.spicetify
-export PATH=$PATH:/home/tapo4eg3d/.cargo/bin
+export PATH=$PATH:$HOME/.spicetify
+export PATH=$PATH:$HOME/.cargo/bin
 
 # Utils for cross compilation of MacOS
 export PATH=$PATH:/usr/local/osx-ndk-x86/bin
@@ -158,3 +160,13 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+alias pw="pomodoro 'main-work'"
+alias pb="pomodoro 'short-break'"
+alias plb="pomodoro 'long-break'"
+
+alias rusb="sudo -E restic -r ~/usb/Backups"
+alias usb-backup="rusb --verbose backup ~/Cloud"
+
+# Jetbrains hacks
+___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "${___MY_VMOPTIONS_SHELL_FILE}"; fi

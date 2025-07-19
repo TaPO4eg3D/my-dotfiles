@@ -61,6 +61,19 @@ end, {
   desc = "Copy the full file path to clipboard"
 })
 
+map("n", "<leader>qa", function()
+  vim.fn.setqflist({
+    {
+      filename = vim.fn.expand('%'),
+      lnum = vim.fn.line('.'),
+      col = vim.fn.col('.'),
+      text = vim.fn.getline('.'),
+    }
+  }, 'a')
+end, {
+  desc = "Add the curently selected line to the QuickFixList"
+})
+
 -- Documenting available keymappings and groups
 local wk = require('which-key')
 

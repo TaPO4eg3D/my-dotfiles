@@ -119,7 +119,6 @@ return {
           },
         },
         ccls = {},
-        pyright = {},
         volar = {},
         docker_compose_language_service = {
           filetypes = { "yaml" }
@@ -276,7 +275,6 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
-        "pyright",
         "typescript-language-server",
       },
     }

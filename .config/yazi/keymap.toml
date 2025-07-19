@@ -1,18 +1,22 @@
-[[manager.append_keymap]]
+[[mgr.append_keymap]]
 on  = ["c", "s"]
 run = "plugin steam"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = [ "c", "a" ]
 run  = "plugin compress"
 desc = "Archive selected files"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = [ "g", "s" ]
-run  = "cd ~/storage/Wolf/common/Steam/Games/"
+run  = "cd /home/tapo4eg3d/.steam/steam/steamapps/common"
 desc = "Go to the Steam folder (storage)"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
+on = ["i"]
+run = ["toggle_all", "toggle", "remove --force"]
+
+[[mgr.prepend_keymap]]
 on   = [ "<C-n>" ]
 run  = '''
     shell 'ripdrag "$@" -x 2>/dev/null &' --confirm

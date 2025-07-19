@@ -242,5 +242,41 @@ return {
         telescope = nil,
       },
     },
+  },
+  {
+    "vuki656/package-info.nvim",
+    opts = {
+      package_manager = "npm",
+    },
+    config = function (opts)
+      local package_info = require('package-info')
+      package_info.setup(opts)
+
+      local keymap_opts = {
+      }
+      --- Merge keymap_opts with keymap description
+      ---@param desc string
+      ---@return table
+      local function d(desc)
+        ---@type table<string, (string | boolean)>
+        local result = {
+          desc = desc,
+        }
+        for k, v in pairs(keymap_opts) do result[k] = v end
+
+        return result
+      end
+
+      vim.api.nvim_create_autocmd("BufRead", {
+        group = vim.api.nvim_create_augroup("PackageJSON", { clear = true }),
+        pattern = "package.json",
+        callback = function(args)
+          keymap_opts.buffer = args.buf
+
+          vim.keymap.set("n", "<leader>cu", package_info.update, d("Update a package on the selected line"))
+        end,
+      })
+
+    end
   }
 }

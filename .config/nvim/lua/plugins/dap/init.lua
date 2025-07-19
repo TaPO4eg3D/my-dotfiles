@@ -122,7 +122,7 @@ return {
       },
     }
 
-    dap.adapters.python = function(cb, config)
+    dap.adapters.debugpy = function(cb, config)
       if config.request == 'attach' then
         ---@diagnostic disable-next-line: undefined-field
         local port = (config.connect or config).port
