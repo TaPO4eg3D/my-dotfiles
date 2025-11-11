@@ -233,6 +233,13 @@ return {
     cmd = {
       "Neogit",
     },
+    keys = {
+      {
+        "<leader>ng",
+        "<cmd>:Neogit<CR>",
+        desc = "Open NeoGit"
+      }
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "ibhagwan/fzf-lua",

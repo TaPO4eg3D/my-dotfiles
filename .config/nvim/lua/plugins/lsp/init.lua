@@ -45,6 +45,11 @@ local lsp_keymapping = {
   },
   {
     "<leader>rf",
+    "<cmd>FzfLua lsp_finder<CR>",
+    desc = "LSP finder",
+  },
+  {
+    "<leader>rF",
     vim.lsp.buf.format,
     desc = "Format Buffer",
   },
@@ -143,7 +148,7 @@ return {
           capabilities = vim.deepcopy(capabilities),
         }, servers[server] or {})
 
-        require("lspconfig")[server].setup(server_opts)
+        vim.lsp.config(server, server_opts)
       end
 
       local installed_servers = mason_lsp.get_installed_servers()
@@ -195,8 +200,8 @@ return {
   -- Rust tooling
   {
     'mrcjkb/rustaceanvim',
-    version = '^4',
-    ft = { 'rust' },
+    version = '^6',
+    lazy = false
   },
   -- Managing Crates in Rust
   {

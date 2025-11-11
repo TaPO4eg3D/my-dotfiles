@@ -3,23 +3,33 @@ local utils = require("utils")
 return {
   -- Colorschema
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
+    "rose-pine/neovim",
+    name = "rose-pine",
     opts = {
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
+      highlight_groups= {
+        WinBar = { fg = "love", bg = "transparent" },
       },
-      style = "moon",
+      styles = {
+          transparency = true,
+      },
     },
   },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000
-  },
-
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   lazy = true,
+  --   opts = {
+  --     transparent = true,
+  --     on_colors = function (colors)
+  --       -- More visible Line numbers
+  --       colors.fg_gutter = "#b2b8cf"
+  --     end,
+  --     styles = {
+  --       sidebars = "transparent",
+  --       floats = "transparent",
+  --     },
+  --     style = "moon",
+  --   },
+  -- },
   -- Icons
   {
     "nvim-tree/nvim-web-devicons",
@@ -49,7 +59,7 @@ return {
         return math.floor(vim.o.columns * 0.75)
       end,
     },
-    config = function (opts)
+    config = function(opts)
       local notify = require('notify')
       notify.setup(opts)
 

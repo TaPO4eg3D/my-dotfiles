@@ -31,19 +31,29 @@ return {
         desc = "Resume Last Search",
       },
       {
-        "<leader>ff",
+        "<leader>fF",
         "<cmd>FzfLua git_files<cr>",
-        desc = "Find files",
+        desc = "Find files (Git)",
       },
       {
-        "<leader>fF",
+        "<leader>ff",
         "<cmd>FzfLua files<cr>",
-        desc = "Find Files (Git)",
+        desc = "Find Files",
       },
       {
         "<leader>fi",
         "<cmd>FzfLua live_grep<cr>",
         desc = "Live Grep",
+      },
+      {
+        "<leader>fs",
+        "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
+        desc = "Workspace Symbols",
+      },
+      {
+        "<leader>fS",
+        "<cmd>FzfLua lsp_document_symbols<cr>",
+        desc = "Document Symbols",
       },
       {
         "<leader>foi",
@@ -105,112 +115,112 @@ return {
   },
 
   -- file explorer
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    cmd = "Neotree",
-    version = "3.15",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      {
-        "s1n7ax/nvim-window-picker",
-        opts = {
-          autoselect_one = true,
-          include_current = false,
-          filter_rules = {
-            -- filter using buffer options
-            bo = {
-              -- if the file type is one of following, the window will be ignored
-              filetype = { 'neo-tree', "neo-tree-popup", "notify" },
-
-              -- if the buffer type is one of following, the window will be ignored
-              buftype = { 'terminal', "quickfix" },
-            },
-          },
-          highlights = {
-            statusline = {
-              unfocused = {
-                bg = "#f051c6",
-              },
-            }
-          },
-        },
-      }
-    },
-    keys = {
-      {
-        "<leader>nn",
-        "<cmd>Neotree<CR>",
-        desc = "Explorer NeoTree",
-      },
-    },
-    deactivate = function()
-      vim.cmd([[Neotree close]])
-    end,
-    init = function()
-      vim.g.neo_tree_remove_legacy_commands = 1
-
-      -- Open NeoTree if NeoVim was opened with a directory as an argument
-      if vim.fn.argc() == 1 then
-        local stat = vim.loop.fs_stat(vim.fn.argv(0))
-        if stat and stat.type == "directory" then
-          require("neo-tree")
-        end
-      end
-    end,
-    opts = {
-      filesystem = {
-        bind_to_cwd = false,
-        follow_current_file = {
-          enabled = true,
-        },
-        use_libuv_file_watcher = true,
-      },
-      window = {
-        mappings = {
-          ["<space>"] = "none",
-          ["W"] = "open_with_window_picker",
-          ["O"] = {
-            function(state)
-              local node = state.tree:get_node()
-              local filepath = node.path
-              local osType = os.getenv("OS")
-
-              local command
-
-              if osType == "Windows_NT" then
-                command = "start " .. filepath
-              elseif osType == "Darwin" then
-                command = "open " .. filepath
-              else
-                local handle = io.popen("which handlr")
-                assert(handle)
-
-                local result = handle:read("*a")
-                handle:close()
-
-                if not string.find(result, "not found") then
-                  command = "handlr open " .. filepath
-                else
-                  command = "xdg-open " .. filepath
-                end
-              end
-
-              vim.notify("Openning a file..")
-              os.execute(command)
-            end
-          }
-        },
-      },
-      default_component_configs = {
-        indent = {
-          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "",
-          expander_expanded = "",
-          expander_highlight = "NeoTreeExpander",
-        },
-      },
-    },
-  },
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   cmd = "Neotree",
+  --   version = "3.15",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     {
+  --       "s1n7ax/nvim-window-picker",
+  --       opts = {
+  --         autoselect_one = true,
+  --         include_current = false,
+  --         filter_rules = {
+  --           -- filter using buffer options
+  --           bo = {
+  --             -- if the file type is one of following, the window will be ignored
+  --             filetype = { 'neo-tree', "neo-tree-popup", "notify" },
+  --
+  --             -- if the buffer type is one of following, the window will be ignored
+  --             buftype = { 'terminal', "quickfix" },
+  --           },
+  --         },
+  --         highlights = {
+  --           statusline = {
+  --             unfocused = {
+  --               bg = "#f051c6",
+  --             },
+  --           }
+  --         },
+  --       },
+  --     }
+  --   },
+  --   keys = {
+  --     {
+  --       "<leader>nn",
+  --       "<cmd>Neotree<CR>",
+  --       desc = "Explorer NeoTree",
+  --     },
+  --   },
+  --   deactivate = function()
+  --     vim.cmd([[Neotree close]])
+  --   end,
+  --   init = function()
+  --     vim.g.neo_tree_remove_legacy_commands = 1
+  --
+  --     -- Open NeoTree if NeoVim was opened with a directory as an argument
+  --     if vim.fn.argc() == 1 then
+  --       local stat = vim.loop.fs_stat(vim.fn.argv(0))
+  --       if stat and stat.type == "directory" then
+  --         require("neo-tree")
+  --       end
+  --     end
+  --   end,
+  --   opts = {
+  --     filesystem = {
+  --       bind_to_cwd = false,
+  --       follow_current_file = {
+  --         enabled = true,
+  --       },
+  --       use_libuv_file_watcher = true,
+  --     },
+  --     window = {
+  --       mappings = {
+  --         ["<space>"] = "none",
+  --         ["W"] = "open_with_window_picker",
+  --         ["O"] = {
+  --           function(state)
+  --             local node = state.tree:get_node()
+  --             local filepath = node.path
+  --             local osType = os.getenv("OS")
+  --
+  --             local command
+  --
+  --             if osType == "Windows_NT" then
+  --               command = "start " .. filepath
+  --             elseif osType == "Darwin" then
+  --               command = "open " .. filepath
+  --             else
+  --               local handle = io.popen("which handlr")
+  --               assert(handle)
+  --
+  --               local result = handle:read("*a")
+  --               handle:close()
+  --
+  --               if not string.find(result, "not found") then
+  --                 command = "handlr open " .. filepath
+  --               else
+  --                 command = "xdg-open " .. filepath
+  --               end
+  --             end
+  --
+  --             vim.notify("Openning a file..")
+  --             os.execute(command)
+  --           end
+  --         }
+  --       },
+  --     },
+  --     default_component_configs = {
+  --       indent = {
+  --         with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+  --         expander_collapsed = "",
+  --         expander_expanded = "",
+  --         expander_highlight = "NeoTreeExpander",
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- TMUX Integration
   -- {
@@ -233,6 +243,27 @@ return {
   --     vim.g.tmux_navigator_no_mappings = 1
   --   end
   -- },
+
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {
+      delete_to_trash = true,
+    },
+    keys = {
+      {
+        "-",
+        "<CMD>Oil<CR>",
+        desc = "Open parent directory in Oil"
+      }
+    },
+    -- Optional dependencies
+    -- dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
 
   -- Time tracking
   {

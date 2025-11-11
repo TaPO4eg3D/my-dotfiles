@@ -13,12 +13,17 @@ run  = "cd /home/tapo4eg3d/.steam/steam/steamapps/common"
 desc = "Go to the Steam folder (storage)"
 
 [[mgr.prepend_keymap]]
+on   = [ "g", "m" ]
+run  = "cd /home/tapo4eg3d/Projects/MTS"
+desc = "Go to the MTS Project dir"
+
+[[mgr.prepend_keymap]]
 on = ["i"]
 run = ["toggle_all", "toggle", "remove --force"]
 
 [[mgr.prepend_keymap]]
 on   = [ "<C-n>" ]
 run  = '''
-    shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
+    shell 'ripdrag --no-click -a "$@" -x 2>/dev/null &' --confirm
 '''
 desc = "Drag and Drop"

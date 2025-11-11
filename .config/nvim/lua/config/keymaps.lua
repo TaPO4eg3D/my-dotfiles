@@ -52,6 +52,10 @@ map("n", "<leader>th", "<cmd>:tabprevious<cr>", { desc = "Previous tab" })
 map("n", "<leader>tl", "<cmd>:tabnext<cr>", { desc = "Next tab" })
 map("n", "<leader>tc", "<cmd>:tabclose<cr>", { desc = "Close the tab" })
 
+map("n", "<leader>rl", vim.lsp.codelens.run, {
+  desc = "Execute a Code Lens under the cursor"
+})
+
 map("n", "<leader>cf", function()
   local file_path = vim.api.nvim_buf_get_name(0)
   vim.fn.setreg('+', file_path)
