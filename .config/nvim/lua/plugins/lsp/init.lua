@@ -149,6 +149,7 @@ return {
         }, servers[server] or {})
 
         vim.lsp.config(server, server_opts)
+        vim.lsp.enable(server)
       end
 
       local installed_servers = mason_lsp.get_installed_servers()

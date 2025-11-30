@@ -6,6 +6,9 @@ declare -A pomo_options
 
 pomo_options["gaming"]="60"
 pomo_options["main-work"]="55"
+pomo_options["intense-learning"]="25"
+
+pomo_options["tiny-break"]="5"
 pomo_options["short-break"]="10"
 pomo_options["long-break"]="20"
 
@@ -13,6 +16,9 @@ declare -A pomo_tts
 
 pomo_tts["gaming"]="Enough playing, it's time to do some stretching"
 pomo_tts["main-work"]="Good job on staying focused, take a rest now"
+pomo_tts["intense-learning"]="Good job on staying focused while learning, take a rest now"
+
+pomo_tts["tiny-break"]="Tiny break is over, time to get focused!"
 pomo_tts["short-break"]="Small break is over, time to get focused!"
 pomo_tts["long-break"]="Long break is over, time to get focused!"
 

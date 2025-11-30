@@ -51,6 +51,7 @@ return {
     {
       "jay-babu/mason-nvim-dap.nvim",
       dependencies = "mason.nvim",
+      lazy = false,
       cmd = { "DapInstall", "DapUninstall" },
       opts = {
         -- Makes a best effort to setup the various debuggers with

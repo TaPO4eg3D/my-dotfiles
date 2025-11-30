@@ -136,6 +136,9 @@ export PATH=$PATH:$HOME/.cargo/bin
 # Utils for cross compilation of MacOS
 export PATH=$PATH:/usr/local/osx-ndk-x86/bin
 
+# .NET tools
+export PATH=$PATH:/home/tapo4eg3d/.dotnet/tools
+
 export UID=$(id -u)
 export GROUPS=$(id -g)
 
@@ -167,6 +170,8 @@ alias plb="pomodoro 'long-break'"
 
 alias rusb="sudo -E restic -r ~/usb/Backups"
 alias usb-backup="rusb --verbose backup ~/Cloud"
+
+alias mts-connect="/home/tapo4eg3d/Applications/oc-sso --attempts 500 --csd-wrapper=/usr/lib/openconnect/csd-post.sh vpn-ra.mts.ru/outside"
 
 # Jetbrains hacks
 ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "${___MY_VMOPTIONS_SHELL_FILE}"; fi
