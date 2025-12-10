@@ -175,3 +175,6 @@ alias mts-connect="/home/tapo4eg3d/Applications/oc-sso --attempts 500 --csd-wrap
 
 # Jetbrains hacks
 ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "${___MY_VMOPTIONS_SHELL_FILE}"; fi
+
+# opencode
+export PATH=/home/tapo4eg3d/.opencode/bin:$PATH

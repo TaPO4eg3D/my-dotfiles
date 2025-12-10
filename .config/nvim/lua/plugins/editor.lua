@@ -244,6 +244,28 @@ return {
   --   end
   -- },
 
+  -- Folding
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = {
+      'kevinhwang91/promise-async'
+    },
+    config = function (opts)
+      vim.o.foldcolumn = '1'
+
+      -- Using ufo provider need a large value
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+      vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldinner: ,foldclose:'
+
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+      require('ufo').setup(opts)
+    end
+  },
+
   {
     'stevearc/oil.nvim',
     ---@module 'oil'

@@ -1,35 +1,27 @@
 local utils = require("utils")
 
 return {
-  -- Colorschema
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "folke/tokyonight.nvim",
+    lazy = true,
     opts = {
-      highlight_groups= {
-        WinBar = { fg = "love", bg = "transparent" },
-      },
+      transparent = true,
+      on_colors = function (colors)
+        -- More visible Line numbers
+        -- colors.fg_gutter = "#b2b8cf"
+      end,
+      on_highlights = function (highlights, colors)
+        highlights.LineNr.fg = "#b2b8cf"
+        highlights.LineNrAbove.fg = "#b2b8cf"
+        highlights.LineNrBelow.fg = "#b2b8cf"
+      end,
       styles = {
-          transparency = true,
+        sidebars = "transparent",
+        floats = "transparent",
       },
+      style = "moon",
     },
   },
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   lazy = true,
-  --   opts = {
-  --     transparent = true,
-  --     on_colors = function (colors)
-  --       -- More visible Line numbers
-  --       colors.fg_gutter = "#b2b8cf"
-  --     end,
-  --     styles = {
-  --       sidebars = "transparent",
-  --       floats = "transparent",
-  --     },
-  --     style = "moon",
-  --   },
-  -- },
   -- Icons
   {
     "nvim-tree/nvim-web-devicons",
@@ -68,22 +60,25 @@ return {
   },
 
   -- Transparent BG
-  {
-    "xiyaowong/transparent.nvim",
-    opts = {
-      extra_groups = {
-        "NormalFloat",
-        "NeoTreeNormal",
-        "NeoTreeNormalNC",
-      },
-    },
-    lazy = false,
-    config = function(_, opts)
-      require("transparent").setup(opts)
-
-      vim.cmd [[TransparentEnable]]
-    end
-  },
+  -- {
+  --   "xiyaowong/transparent.nvim",
+  --   opts = {
+  --     extra_groups = {
+  --       "NormalFloat",
+  --       "NeoTreeNormal",
+  --       "NeoTreeNormalNC",
+  --     },
+  --     exclude_groups = {
+  --       "NotifyBackground",
+  --     }
+  --   },
+  --   lazy = false,
+  --   config = function(_, opts)
+  --     -- require("transparent").setup(opts)
+  --
+  --     -- vim.cmd [[TransparentEnable]]
+  --   end
+  -- },
 
   -- Improved vim.ui functions
   {

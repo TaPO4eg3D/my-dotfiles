@@ -97,7 +97,7 @@ return {
       "BufNewFile",
     },
     dependencies = {
-      -- Extension of LSP capabitlites
+      -- Extension of LSP capabilities
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       -- "hrsh7th/cmp-nvim-lsp",
@@ -124,7 +124,7 @@ return {
           },
         },
         ccls = {},
-        volar = {},
+        harper_ls = {},
         docker_compose_language_service = {
           filetypes = { "yaml" }
         }
@@ -180,7 +180,7 @@ return {
     end
   },
 
-  -- LSP Server embedden in NeoVim
+  -- LSP Server embedded in Neovim
   {
     "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
