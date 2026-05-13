@@ -178,3 +178,7 @@ ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_V
 
 # opencode
 export PATH=/home/tapo4eg3d/.opencode/bin:$PATH
+
+# Xtensa support by Rust
+# export PATH="/home/tapo4eg3d/.rustup/toolchains/esp/xtensa-esp-elf/esp-15.2.0_20250920/xtensa-esp-elf/bin:$PATH"
+# export LIBCLANG_PATH="/home/tapo4eg3d/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-20.1.1_20250829/esp-clang/lib"

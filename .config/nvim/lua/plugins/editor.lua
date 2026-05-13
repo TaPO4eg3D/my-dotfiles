@@ -223,26 +223,26 @@ return {
   -- },
 
   -- TMUX Integration
-  -- {
-  --   "christoomey/vim-tmux-navigator",
-  --   cmd = {
-  --     "TmuxNavigateLeft",
-  --     "TmuxNavigateDown",
-  --     "TmuxNavigateUp",
-  --     "TmuxNavigateRight",
-  --     "TmuxNavigatePrevious",
-  --   },
-  --   keys = {
-  --     { "<A-h>",  "<cmd>TmuxNavigateLeft<cr>" },
-  --     { "<A-j>",  "<cmd>TmuxNavigateDown<cr>" },
-  --     { "<A-k>",  "<cmd>TmuxNavigateUp<cr>" },
-  --     { "<A-l>",  "<cmd>TmuxNavigateRight<cr>" },
-  --     { "<A-\\>", "<cmd>TmuxNavigatePrevious<cr>" },
-  --   },
-  --   config = function()
-  --     vim.g.tmux_navigator_no_mappings = 1
-  --   end
-  -- },
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<A-h>",  "<cmd>TmuxNavigateLeft<cr>" },
+      { "<A-j>",  "<cmd>TmuxNavigateDown<cr>" },
+      { "<A-k>",  "<cmd>TmuxNavigateUp<cr>" },
+      { "<A-l>",  "<cmd>TmuxNavigateRight<cr>" },
+      { "<A-\\>", "<cmd>TmuxNavigatePrevious<cr>" },
+    },
+    config = function()
+      vim.g.tmux_navigator_no_mappings = 1
+    end
+  },
 
   -- Folding
   {
@@ -250,7 +250,7 @@ return {
     dependencies = {
       'kevinhwang91/promise-async'
     },
-    config = function (opts)
+    config = function(opts)
       vim.o.foldcolumn = '1'
 
       -- Using ufo provider need a large value
@@ -272,6 +272,7 @@ return {
     ---@type oil.SetupOpts
     opts = {
       delete_to_trash = true,
+      watch_for_changes = true,
     },
     keys = {
       {
@@ -349,13 +350,12 @@ return {
 
           local msg = "The current list:\n\n"
           for _, item in ipairs(current_list) do
-              msg = msg .. "- " .. item .. "\n"
+            msg = msg .. "- " .. item .. "\n"
           end
 
           vim.notify(msg, vim.log.levels.INFO, {
             title = "File added!"
           })
-
         end,
         desc = "Add file to harpoon",
       },
@@ -410,61 +410,62 @@ return {
       },
     }
   },
+  -- Multiple Cursors
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    version = false, -- Never set this value to "*"! Never!
-    opts = {
-      provider = "openai",
-      providers = {
-        openai = {
-          endpoint = "https://api.openai.com/v1",
-          model = "gpt-4o",  -- your desired model (or use gpt-4o, etc.)
-          timeout = 30000,   -- Timeout in milliseconds, increase this for reasoning models
-          max_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-          --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-        },
-      },
-      web_search_engine = {
-        provider = "tavily", -- tavily, serpapi, searchapi, google or kagi
-      }
-    },
-    init = function()
-      vim.g.root_spec = { { ".git" }, "lsp", "cwd" }
-    end,
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      -- Below are optional dependencies
-      "ibhagwan/fzf-lua",
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
-    },
+    "jake-stewart/multicursor.nvim",
+    branch = "1.0",
+    config = function()
+      local mc = require("multicursor-nvim")
+      mc.setup()
+
+      local set = vim.keymap.set
+
+      -- Add or skip cursor above/below the main cursor.
+      set({ "n", "x" }, "<up>", function() mc.lineAddCursor(-1) end)
+      set({ "n", "x" }, "<down>", function() mc.lineAddCursor(1) end)
+      -- set({ "n", "x" }, "<leader><up>", function() mc.lineSkipCursor(-1) end)
+      -- set({ "n", "x" }, "<leader><down>", function() mc.lineSkipCursor(1) end)
+
+      -- Add or skip adding a new cursor by matching word/selection
+      set({ "n", "x" }, "<C-n>", function() mc.matchAddCursor(1) end)
+
+      -- Add and remove cursors with control + left click.
+      set("n", "<c-leftmouse>", mc.handleMouse)
+      set("n", "<c-leftdrag>", mc.handleMouseDrag)
+      set("n", "<c-leftrelease>", mc.handleMouseRelease)
+
+      -- Disable and enable cursors.
+      set({ "n", "x" }, "<c-q>", mc.toggleCursor)
+
+      -- Mappings defined in a keymap layer only apply when there are
+      -- multiple cursors. This lets you have overlapping mappings.
+      mc.addKeymapLayer(function(layerSet)
+        -- Select a different cursor as the main one.
+        layerSet({ "n", "x" }, "<left>", mc.prevCursor)
+        layerSet({ "n", "x" }, "<right>", mc.nextCursor)
+
+        -- Delete the main cursor.
+        layerSet({ "n", "x" }, "<leader>x", mc.deleteCursor)
+
+        -- Enable and clear cursors using escape.
+        layerSet("n", "<esc>", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+      end)
+
+      -- Customize how cursors look.
+      local hl = vim.api.nvim_set_hl
+      hl(0, "MultiCursorCursor", { reverse = true })
+      hl(0, "MultiCursorVisual", { link = "Visual" })
+      hl(0, "MultiCursorSign", { link = "SignColumn" })
+      hl(0, "MultiCursorMatchPreview", { link = "Search" })
+      hl(0, "MultiCursorDisabledCursor", { reverse = true })
+      hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+      hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+    end
   }
 }

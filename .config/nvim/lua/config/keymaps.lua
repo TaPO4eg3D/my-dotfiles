@@ -17,10 +17,10 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- Window navigation (Defined by vim-tmux-navigator)
-map("n", "<A-h>", "<C-w>h")
-map("n", "<A-j>", "<C-w>j")
-map("n", "<A-l>", "<C-w>l")
-map("n", "<A-k>", "<C-w>k")
+-- map("n", "<A-h>", "<C-w>h")
+-- map("n", "<A-j>", "<C-w>j")
+-- map("n", "<A-l>", "<C-w>l")
+-- map("n", "<A-k>", "<C-w>k")
 
 -- Russian keyboard
 -- vim.o.keymap = "russian-jcukenwin"

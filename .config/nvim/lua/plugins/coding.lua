@@ -42,18 +42,11 @@ return {
     lazy = false, -- lazy loading handled internally
     version = 'v1.*',
     dependencies = {
-      'Kaiser-Yang/blink-cmp-avante',
     },
 
     opts = {
       sources = {
-        default = { 'avante', 'lsp', 'path', 'snippets', 'buffer' },
-        providers = {
-          avante = {
-            module = 'blink-cmp-avante',
-            name = 'Avante',
-          }
-        },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
       keymap = {
         preset = 'enter',
@@ -69,51 +62,6 @@ return {
     },
     opts_extend = { "sources.default" },
   },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   version = false, -- last release is way too old
-  --   event = "InsertEnter",
-  --   dependencies = {
-  --     "hrsh7th/cmp-nvim-lsp",
-  --     "hrsh7th/cmp-path",
-  --     "saadparwaiz1/cmp_luasnip",
-  --   },
-  --   opts = function()
-  --     local cmp = require("cmp")
-  --     local defaults = require("cmp.config.default")()
-  --
-  --     return {
-  --       completion = {
-  --         completeopt = "menu,menuone,noselect,preview,noinsert",
-  --       },
-  --       snippet = {
-  --         expand = function(args)
-  --           require("luasnip").lsp_expand(args.body)
-  --         end,
-  --       },
-  --       mapping = cmp.mapping.preset.insert({
-  --         ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-  --         ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-  --         ["<C-j>"] = cmp.mapping.scroll_docs(4),
-  --         ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-  --         ["<C-Space>"] = cmp.mapping.complete(),
-  --         ["<C-e>"] = cmp.mapping.abort(),
-  --         ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  --         ["<S-CR>"] = cmp.mapping.confirm({
-  --           behavior = cmp.ConfirmBehavior.Replace,
-  --           select = true,
-  --         }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  --       }),
-  --       sources = cmp.config.sources({
-  --         { name = "nvim_lsp" },
-  --         { name = "luasnip" },
-  --         { name = "path" },
-  --         { name = "crates" },
-  --       }),
-  --       sorting = defaults.sorting,
-  --     }
-  --   end,
-  -- },
   -- Git info integration
   {
     "lewis6991/gitsigns.nvim",
@@ -154,40 +102,6 @@ return {
     },
   },
 
-  -- Environment picker
-  {
-    "tapo4eg3d/instance-switcher",
-    dev = true,
-    lazy = true,
-    opts = {
-      rules = {
-        {
-          id = "instance-picker",
-          file = "$(root)/.envs/.local/.django",
-          prompt = "Select Instance: ",
-          env_variable = "DB_CONNECTION_STRING",
-          values = "/home/tapo4eg3d/reb-keys.json",
-          on_select = function(key_name, payload, _)
-            local host
-            local db_name = string.gsub(key_name, "-write", "")
-
-            if key_name == "local" then
-              db_name = "project"
-              host = "postgres"
-            else
-              host = string.format("%s-maint.rebotics.net", db_name)
-            end
-
-            return string.format(
-              "postgresql://%s:%s@%s/%s",
-              payload.username, payload.password, host, db_name
-            )
-          end
-        }
-      },
-    },
-  },
-
   -- Git integration
   {
     "tpope/vim-fugitive",
@@ -195,7 +109,7 @@ return {
     cmd = "Git",
   },
 
-  -- Nice DiffView to resolve merge confilicts / observe diffs
+  -- Nice DiffView to resolve merge conflicts / observe diffs
   {
     "sindrets/diffview.nvim",
     lazy = true,
@@ -285,5 +199,35 @@ return {
       })
 
     end
-  }
+  },
+  {
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      -- Recommended for `ask()` and `select()`.
+      -- Required for `snacks` provider.
+      ---@module 'snacks' <- Loads `snacks.nvim` types for configuration intellisense.
+      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
+    },
+    config = function()
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
+      }
+
+      -- Required for `opts.events.reload`.
+      vim.o.autoread = true
+
+      -- Recommended/example keymaps.
+      vim.keymap.set({ "n", "x" }, "<C-a>", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask opencode" })
+      vim.keymap.set({ "n", "x" }, "<C-x>", function() require("opencode").select() end,                          { desc = "Execute opencode action…" })
+      vim.keymap.set({ "n", "x" },    "ga", function() require("opencode").prompt("@this") end,                   { desc = "Add to opencode" })
+      vim.keymap.set({ "n", "t" }, "<leader>O", function() require("opencode").toggle() end,                          { desc = "Toggle opencode" })
+      vim.keymap.set("n",        "<S-C-u>", function() require("opencode").command("session.half.page.up") end,   { desc = "opencode half page up" })
+      vim.keymap.set("n",        "<S-C-d>", function() require("opencode").command("session.half.page.down") end, { desc = "opencode half page down" })
+
+      -- You may want these if you stick with the opinionated "<C-a>" and "<C-x>" above — otherwise consider "<leader>o".
+      vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment', noremap = true })
+      vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement', noremap = true })
+    end,
+  },
 }
