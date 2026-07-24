@@ -64,6 +64,7 @@ tooltip {
 #pulseaudio,
 #network,
 #workspaces,
+#windowcount,
 #tray,
 #cpu,
 #memory,
@@ -88,9 +89,13 @@ tooltip {
     padding-left: 5px;
 }
 
+#windowcount {
+    margin-right: 0px;
+    border-left: 1px solid red;
+}
+
 #custom-caffeine {
     color: #89dceb;
-    /* border-radius: 10px 0px 0px 10px; */
     border-right: 0px;
     margin-left: 10px;
 }

@@ -1,10 +1,18 @@
 local fn = vim.fn
-local ts_utils = require("nvim-treesitter.ts_utils")
 
 local M = {}
 
 function M.get_module_path()
-	local cursor_node = ts_utils.get_node_at_cursor()
+	local cursor_node = vim.treesitter.get_node()
+
+	if not cursor_node then
+		vim.notify("No treesitter node under cursor!", vim.log.levels.ERROR, {
+			title = "Python Utils",
+		})
+
+		return
+	end
+
 	local cn_type = cursor_node:type()
 
 	if cn_type == "identifier" then

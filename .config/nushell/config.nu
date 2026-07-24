@@ -34,3 +34,22 @@ def --env y [...args] {
 	}
 	rm -fp $tmp
 }
+
+let carapace_completer = {|spans|
+    carapace $spans.0 nushell ...$spans | from json
+}
+
+$env.config.completions = {
+  external: {
+    enable: true,
+    completer: $carapace_completer,
+  },
+}
+$env.config.rm = {
+  always_trash: true
+}
+
+$env.PATH ++= ["~/.local/bin"]
+
+mkdir ($nu.data-dir | path join "vendor/autoload")
+starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")

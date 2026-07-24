@@ -109,6 +109,8 @@ hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + G", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("pkill -x rofi; ~/.local/bin/launchrofi d"))
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot --freeze -m region --clipboard-only"))
 
 -- Movement
 hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
@@ -135,6 +137,14 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+-- Window groups
+hl.bind(mainMod .. " + S", hl.dsp.group.toggle())
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.group.lock())
+hl.bind(mainMod .. " + I", hl.dsp.group.prev())
+hl.bind(mainMod .. " + SHIFT + I", hl.dsp.window.move({ out_of_group = "l" }))
+hl.bind(mainMod .. " + O", hl.dsp.group.next())
+hl.bind(mainMod .. " + SHIFT + O", hl.dsp.window.move({ out_of_group = "r" }))
 
 -- Special workspace
 hl.bind(mainMod .. " + N", hl.dsp.workspace.toggle_special("magic"))
@@ -167,13 +177,39 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
 
--- Ignore maximize requests from all apps
+-- Programming workspace is scrolling by default
+-- hl.workspace_rule({
+--     workspace = "2",
+--     layout = "scrolling",
+-- })
+
+-- Zed always takes the full screen on the scrolling layout
 hl.window_rule({
-    name           = "suppress-maximize-events",
-    match          = { class = ".*" },
+    name = "zed-full-scrolling",
+    match = {
+        class = "dev.zed.Zed",
+    },
+
+    scrolling_width = 1.0,
+})
+
+-- Ignore maximize requests from all apps
+local supress_rule = hl.window_rule({
+    name = "suppress-maximize-events",
+    match = {
+        class = ".*",
+    },
 
     suppress_event = "maximize",
 })
+
+hl.on("workspace.active", function(active)
+    if active == "2" then
+        supress_rule:set_enabled(false)
+    else
+        supress_rule:set_enabled(true)
+    end
+end)
 
 hl.window_rule({
     -- Fix some dragging issues with XWayland
@@ -198,4 +234,12 @@ hl.window_rule({
     },
     float = true,
     fullscreen = true
+})
+
+hl.window_rule({
+  name = "factorio-render",
+  match = {
+    class = "factorio",
+  },
+  render_unfocused = true,
 })
